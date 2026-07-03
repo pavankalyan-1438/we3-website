@@ -51,39 +51,11 @@ a { color: inherit; text-decoration: none; }
     background: var(--bg-color);
 }
 
-/* Ambient Particles */
-.ambient-particles-container { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; }
-.ambient-particle {
-    position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.03;
-    background: radial-gradient(circle, var(--accent-color), transparent 70%);
+.ambient-glow {
+    position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.4;
+    transform: translate3d(0, 0, 0);
 }
-.particle-1 { width: 40vw; height: 40vw; top: 10%; left: 20%; }
-.particle-2 { width: 30vw; height: 30vw; top: 60%; right: 10%; background: radial-gradient(circle, #5b21b6, transparent 70%); }
-.particle-3 { width: 25vw; height: 25vw; bottom: 10%; left: 30%; }
-.light-streak {
-    position: absolute; width: 60vw; height: 2px; background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
-    opacity: 0.02; filter: blur(4px); transform: rotate(-15deg); top: 40%; left: 10%;
-}
-
-/* Guiding Light */
-#guiding-light {
-    position: absolute; top: 0; left: 0;
-    width: 12px; height: 12px;
-    background: var(--accent-color);
-    border-radius: 50%;
-    filter: blur(4px);
-    opacity: 0; /* Hidden until initialized */
-    pointer-events: none;
-    z-index: 0;
-    transform-origin: center center;
-    transform: translate(-50%, -50%);
-    will-change: transform, opacity;
-    transition: background 0.5s ease, filter 0.5s ease;
-}
-.guiding-light-highlight {
-    background: rgba(0, 85, 164, 0.15) !important;
-    filter: blur(20px) !important;
-}
+.glow-2 { bottom: -20%; right: -10%; width: 60vw; height: 60vw; background: radial-gradient(circle, var(--accent-color), transparent 70%); opacity: 0.2; }
 
 
 /* Custom Cursor */
