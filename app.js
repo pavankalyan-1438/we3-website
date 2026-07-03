@@ -24,8 +24,9 @@ window.addEventListener('mousemove', (e) => {
 gsap.set([cursorDot, cursorHalo], { xPercent: -50, yPercent: -50 });
 
 gsap.ticker.add(() => {
-    dotX += (mouseX - dotX) * 0.15;
-    dotY += (mouseY - dotY) * 0.15;
+    // 0.4 factor gives approx 20-30ms smoothing at 60fps
+    dotX += (mouseX - dotX) * 0.4;
+    dotY += (mouseY - dotY) * 0.4;
     
     let velX = dotX - lastMouseX;
     let velY = dotY - lastMouseY;
@@ -38,14 +39,13 @@ gsap.ticker.add(() => {
     let scaleX = 1;
     let scaleY = 1;
     let rotation = 0;
-    let blurPx = 0;
     
     if (velocity > 0.5 && !isCursorInNav && window.innerWidth > 900) {
-        let stretch = Math.min(velocity * 0.05, 0.8);
+        // max 10% deformation
+        let stretch = Math.min(velocity * 0.005, 0.1);
         scaleX = 1 + stretch;
         scaleY = 1 - (stretch * 0.3);
         rotation = angle;
-        blurPx = Math.min(velocity * 0.15, 5); 
     }
     
     if (cursorHalo) {
@@ -54,12 +54,11 @@ gsap.ticker.add(() => {
     }
     
     gsap.set(cursorDot, { 
-        left: mouseX,
-        top: mouseY,
+        left: dotX,
+        top: dotY,
         scaleX: scaleX, 
         scaleY: scaleY, 
-        rotation: rotation,
-        filter: `blur(${blurPx}px)` 
+        rotation: rotation
     });
 });
 
