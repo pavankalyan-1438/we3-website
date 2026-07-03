@@ -37,18 +37,25 @@ gsap.ticker.add(() => {
     let scaleY = 1;
     let rotation = 0;
     
+    let blurPx = 0;
     if (velocity > 0.5 && !isCursorInNav && window.innerWidth > 900) {
         let stretch = Math.min(velocity * 0.04, 0.6); // max stretch 0.6
         scaleX = 1 + stretch;
         scaleY = 1 - (stretch * 0.4);
         rotation = angle;
+        blurPx = Math.min(velocity * 0.1, 4); // Real motion blur
     }
     
     cursorGlass.style.left = `${cursorGlassX}px`;
     cursorGlass.style.top = `${cursorGlassY}px`;
     
     if (!isCursorInNav) {
-        gsap.set(cursorGlass, { scaleX: scaleX, scaleY: scaleY, rotation: rotation });
+        gsap.set(cursorGlass, { 
+            scaleX: scaleX, 
+            scaleY: scaleY, 
+            rotation: rotation,
+            filter: `blur(${blurPx}px)` 
+        });
     }
 });
 
@@ -61,7 +68,7 @@ if (liquidNav) {
         isCursorInNav = true;
         cursorGlass.classList.add('cursor-lens');
         cursorDot.style.opacity = '0';
-        gsap.to(cursorGlass, { scaleX: 1, scaleY: 1, rotation: 0, duration: 0.3, ease: "elastic.out(1, 0.8)" });
+        gsap.to(cursorGlass, { scaleX: 1, scaleY: 1, rotation: 0, filter: 'blur(0px)', duration: 0.3, ease: "elastic.out(1, 0.8)" });
     });
     
     liquidNav.addEventListener('mouseleave', () => {
@@ -91,16 +98,19 @@ if (liquidNav) {
                 let isDirectHover = e.clientX >= rect.left && e.clientX <= rect.right && 
                                     e.clientY >= rect.top && e.clientY <= rect.bottom;
                 
-                let scale = 1 + (progress * 0.02);
-                let brightness = 1 + (progress * 0.1);
+                let scale = 1 + (progress * 0.015);
+                let brightness = 1 + (progress * 0.05); // Very subtle proximity
+                let color = "var(--text-primary)";
                 
                 if (isDirectHover) {
                     scale = 1.08;
                     brightness = 1.25;
+                    color = "var(--accent-color)"; // Highlight direct hover
                 }
                 
                 gsap.to(item, {
                     scale: scale,
+                    color: color,
                     filter: `brightness(${brightness})`,
                     duration: 0.25,
                     ease: "power2.out",
@@ -109,6 +119,7 @@ if (liquidNav) {
             } else {
                 gsap.to(item, {
                     scale: 1,
+                    color: "var(--text-primary)",
                     filter: 'brightness(1)',
                     duration: 0.4,
                     ease: "power2.out",
