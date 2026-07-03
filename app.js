@@ -152,9 +152,12 @@ navItems.forEach(item => {
 });
 
 const sections = document.querySelectorAll('section');
+const bgPatternPoint = document.getElementById('bg-pattern-point');
+if (bgPatternPoint) {
+    gsap.set(bgPatternPoint, { xPercent: -50, yPercent: -50, opacity: 0 });
+}
+
 window.addEventListener('scroll', () => {
-    if (isNavClicking) return; 
-    
     let current = '';
     sections.forEach(section => {
         const sectionTop = section.offsetTop;
@@ -164,11 +167,35 @@ window.addEventListener('scroll', () => {
         }
     });
 
-    navItems.forEach(item => {
-        if (item.dataset.target === current && !item.classList.contains('active')) {
-            updateIndicator(item);
+    if (!isNavClicking) {
+        navItems.forEach(item => {
+            if (item.dataset.target === current && !item.classList.contains('active')) {
+                updateIndicator(item);
+            }
+        });
+    }
+
+    // Pattern Point Logic
+    if (bgPatternPoint) {
+        const activeSection = document.getElementById(current) || sections[0];
+        const header = activeSection.querySelector('.section-title, .hero-title');
+        
+        if (header) {
+            const rect = header.getBoundingClientRect();
+            // Target coordinates relative to viewport (because .ambient-background is fixed)
+            const targetX = rect.left + rect.width / 2;
+            const targetY = rect.top + rect.height / 2;
+            
+            gsap.to(bgPatternPoint, {
+                x: targetX,
+                y: targetY,
+                opacity: 1,
+                duration: 1.5,
+                ease: "power2.out",
+                overwrite: "auto"
+            });
         }
-    });
+    }
 });
 
 // --- 3D Tilt Cards ---
