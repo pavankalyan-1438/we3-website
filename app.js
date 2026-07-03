@@ -175,11 +175,6 @@ tiltCards.forEach(card => {
 
 // --- Background Flow Animation ---
 
-gsap.to('.glow-1', {
-    yPercent: 25,
-    ease: "none",
-    scrollTrigger: { trigger: document.body, start: "top top", end: "bottom bottom", scrub: true }
-});
 gsap.to('.glow-2', {
     yPercent: -20,
     ease: "none",
