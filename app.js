@@ -173,7 +173,42 @@ tiltCards.forEach(card => {
     });
 });
 
-// --- Background Flow Animation ---
+// --- Ambient Background Layers Animation ---
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+if (!reducedMotion) {
+    // 1. Slow infinite drift for SVGs
+    gsap.to('.bg-layer-1-network', { x: -15, y: 10, duration: 20, ease: "sine.inOut", yoyo: true, repeat: -1 });
+    gsap.to('.bg-layer-2-vectors', { x: 10, y: -15, duration: 25, ease: "sine.inOut", yoyo: true, repeat: -1 });
+
+    // 2. Pulse Animation for Connection Network
+    const pulseTrail = document.getElementById('pulse-trail');
+    if (pulseTrail) {
+        const length = pulseTrail.getTotalLength();
+        gsap.set(pulseTrail, { strokeDasharray: length, strokeDashoffset: length });
+        
+        const pulseAnim = () => {
+            gsap.fromTo(pulseTrail, 
+                { strokeDashoffset: length, opacity: 0 },
+                { 
+                    strokeDashoffset: 0, opacity: 0.3, duration: 4, ease: "power1.inOut",
+                    onComplete: () => {
+                        gsap.to(pulseTrail, { 
+                            opacity: 0, duration: 1, ease: "power1.inOut", delay: 1, 
+                            onComplete: () => setTimeout(pulseAnim, 4000 + Math.random() * 4000)
+                        });
+                    }
+                }
+            );
+        };
+        setTimeout(pulseAnim, 2000);
+    }
+}
+
+// 3. Scroll Parallax for Background Layers (moves up on scroll for depth)
+gsap.to('.bg-layer-1-network', { yPercent: -5, ease: "none", scrollTrigger: { trigger: document.body, start: "top top", end: "bottom bottom", scrub: true }});
+gsap.to('.bg-layer-2-vectors', { yPercent: -10, ease: "none", scrollTrigger: { trigger: document.body, start: "top top", end: "bottom bottom", scrub: true }});
+gsap.to('.bg-layer-3-watermark', { yPercent: -15, ease: "none", scrollTrigger: { trigger: document.body, start: "top top", end: "bottom bottom", scrub: true }});
 
 gsap.to('.glow-2', {
     yPercent: -20,
