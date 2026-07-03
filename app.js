@@ -17,12 +17,107 @@ window.addEventListener('mousemove', (e) => {
     cursorDot.style.top = `${mouseY}px`;
 });
 
+let lastMouseX = mouseX;
+let lastMouseY = mouseY;
+let isCursorInNav = false;
+
 gsap.ticker.add(() => {
     cursorGlassX += (mouseX - cursorGlassX) * 0.15;
     cursorGlassY += (mouseY - cursorGlassY) * 0.15;
+    
+    let velX = cursorGlassX - lastMouseX;
+    let velY = cursorGlassY - lastMouseY;
+    lastMouseX = cursorGlassX;
+    lastMouseY = cursorGlassY;
+    
+    let velocity = Math.sqrt(velX*velX + velY*velY);
+    let angle = Math.atan2(velY, velX) * (180 / Math.PI);
+    
+    let scaleX = 1;
+    let scaleY = 1;
+    let rotation = 0;
+    
+    if (velocity > 0.5 && !isCursorInNav && window.innerWidth > 900) {
+        let stretch = Math.min(velocity * 0.04, 0.6); // max stretch 0.6
+        scaleX = 1 + stretch;
+        scaleY = 1 - (stretch * 0.4);
+        rotation = angle;
+    }
+    
     cursorGlass.style.left = `${cursorGlassX}px`;
     cursorGlass.style.top = `${cursorGlassY}px`;
+    
+    if (!isCursorInNav) {
+        gsap.set(cursorGlass, { scaleX: scaleX, scaleY: scaleY, rotation: rotation });
+    }
 });
+
+// --- Nav Bar Advanced Cursor Engine ---
+const liquidNav = document.querySelector('.liquid-nav');
+const navItemsList = document.querySelectorAll('.nav-item');
+
+if (liquidNav) {
+    liquidNav.addEventListener('mouseenter', () => {
+        isCursorInNav = true;
+        cursorGlass.classList.add('cursor-lens');
+        cursorDot.style.opacity = '0';
+        gsap.to(cursorGlass, { scaleX: 1, scaleY: 1, rotation: 0, duration: 0.3, ease: "elastic.out(1, 0.8)" });
+    });
+    
+    liquidNav.addEventListener('mouseleave', () => {
+        isCursorInNav = false;
+        cursorGlass.classList.remove('cursor-lens');
+        cursorDot.style.opacity = '1';
+        
+        navItemsList.forEach(item => {
+            gsap.to(item, { scale: 1, filter: 'brightness(1)', duration: 0.4, ease: "power2.out" });
+        });
+    });
+    
+    liquidNav.addEventListener('mousemove', (e) => {
+        if (window.innerWidth <= 900) return;
+        
+        navItemsList.forEach(item => {
+            const rect = item.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            const dist = Math.hypot(centerX - e.clientX, centerY - e.clientY);
+            const influenceRadius = 70;
+            
+            if (dist < influenceRadius) {
+                const progress = 1 - (dist / influenceRadius);
+                
+                let isDirectHover = e.clientX >= rect.left && e.clientX <= rect.right && 
+                                    e.clientY >= rect.top && e.clientY <= rect.bottom;
+                
+                let scale = 1 + (progress * 0.02);
+                let brightness = 1 + (progress * 0.1);
+                
+                if (isDirectHover) {
+                    scale = 1.08;
+                    brightness = 1.25;
+                }
+                
+                gsap.to(item, {
+                    scale: scale,
+                    filter: `brightness(${brightness})`,
+                    duration: 0.25,
+                    ease: "power2.out",
+                    overwrite: "auto"
+                });
+            } else {
+                gsap.to(item, {
+                    scale: 1,
+                    filter: 'brightness(1)',
+                    duration: 0.4,
+                    ease: "power2.out",
+                    overwrite: "auto"
+                });
+            }
+        });
+    });
+}
 
 magneticElements.forEach(el => {
     const isMagnetic = el.classList.contains('btn-magnetic');
@@ -38,20 +133,23 @@ magneticElements.forEach(el => {
                 ease: "power2.out"
             });
         }
-        cursorGlass.style.width = '60px';
-        cursorGlass.style.height = '60px';
-        cursorGlass.style.background = 'rgba(0, 85, 164, 0.1)';
-        cursorDot.style.transform = 'translate(-50%, -50%) scale(0)';
+        // Generic hover cursor expansion
+        if (!el.closest('.liquid-nav')) {
+            cursorGlass.style.width = '60px';
+            cursorGlass.style.height = '60px';
+            cursorDot.style.transform = 'translate(-50%, -50%) scale(0)';
+        }
     });
     
     el.addEventListener('mouseleave', () => {
         if(isMagnetic && window.innerWidth > 900) {
             gsap.to(el, { x: 0, y: 0, duration: 0.6, ease: "elastic.out(1, 0.3)" });
         }
-        cursorGlass.style.width = '40px';
-        cursorGlass.style.height = '40px';
-        cursorGlass.style.background = 'var(--glass-bg)';
-        cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
+        if (!el.closest('.liquid-nav')) {
+            cursorGlass.style.width = '42px';
+            cursorGlass.style.height = '42px';
+            cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
+        }
     });
 
     el.addEventListener('click', () => {
