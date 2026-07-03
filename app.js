@@ -173,43 +173,6 @@ tiltCards.forEach(card => {
     });
 });
 
-// --- Ambient Background Layers Animation ---
-const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-if (!reducedMotion) {
-    // 1. Slow infinite drift for SVGs
-    gsap.to('.bg-layer-1-network', { x: -15, y: 10, duration: 20, ease: "sine.inOut", yoyo: true, repeat: -1 });
-    gsap.to('.bg-layer-2-vectors', { x: 10, y: -15, duration: 25, ease: "sine.inOut", yoyo: true, repeat: -1 });
-
-    // 2. Pulse Animation for Connection Network
-    const pulseTrail = document.getElementById('pulse-trail');
-    if (pulseTrail) {
-        const length = pulseTrail.getTotalLength();
-        gsap.set(pulseTrail, { strokeDasharray: length, strokeDashoffset: length });
-        
-        const pulseAnim = () => {
-            gsap.fromTo(pulseTrail, 
-                { strokeDashoffset: length, opacity: 0 },
-                { 
-                    strokeDashoffset: 0, opacity: 0.3, duration: 4, ease: "power1.inOut",
-                    onComplete: () => {
-                        gsap.to(pulseTrail, { 
-                            opacity: 0, duration: 1, ease: "power1.inOut", delay: 1, 
-                            onComplete: () => setTimeout(pulseAnim, 4000 + Math.random() * 4000)
-                        });
-                    }
-                }
-            );
-        };
-        setTimeout(pulseAnim, 2000);
-    }
-}
-
-// 3. Scroll Parallax for Background Layers (moves up on scroll for depth)
-gsap.to('.bg-layer-1-network', { yPercent: -5, ease: "none", scrollTrigger: { trigger: document.body, start: "top top", end: "bottom bottom", scrub: true }});
-gsap.to('.bg-layer-2-vectors', { yPercent: -10, ease: "none", scrollTrigger: { trigger: document.body, start: "top top", end: "bottom bottom", scrub: true }});
-gsap.to('.bg-layer-3-watermark', { yPercent: -15, ease: "none", scrollTrigger: { trigger: document.body, start: "top top", end: "bottom bottom", scrub: true }});
-
 gsap.to('.glow-2', {
     yPercent: -20,
     ease: "none",
@@ -265,5 +228,105 @@ if (document.querySelector(".timeline-container")) {
                 }
             });
         }
+    });
+}
+// --- Ambient Particles Animation ---
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+if (!reducedMotion) {
+    gsap.to('.particle-1', { x: 100, y: 50, duration: 25, ease: "sine.inOut", yoyo: true, repeat: -1 });
+    gsap.to('.particle-2', { x: -80, y: -60, duration: 30, ease: "sine.inOut", yoyo: true, repeat: -1 });
+    gsap.to('.particle-3', { x: 60, y: -90, duration: 22, ease: "sine.inOut", yoyo: true, repeat: -1 });
+    gsap.to('.streak-1', { x: 200, y: 100, duration: 40, ease: "sine.inOut", yoyo: true, repeat: -1 });
+}
+
+// --- Guiding Light Engine ---
+const guidingLight = document.getElementById('guiding-light');
+
+if (guidingLight && !reducedMotion && window.innerWidth > 900) {
+    let headers = [];
+    
+    function initGuidingLight() {
+        headers = Array.from(document.querySelectorAll('.hero-title, .section-title'));
+        if (!headers.length) return;
+        
+        // Ensure guiding light is visible
+        gsap.set(guidingLight, { opacity: 1 });
+        
+        let headerData = headers.map(h => {
+            const rect = h.getBoundingClientRect();
+            // Calculate absolute position on the page
+            return {
+                el: h,
+                x: rect.left + window.scrollX + (rect.width / 2),
+                y: rect.top + window.scrollY + (rect.height / 2),
+                width: rect.width,
+                height: rect.height
+            };
+        });
+
+        // Remove old scroll triggers for light if any
+        ScrollTrigger.getAll().filter(st => st.vars.id === "guidingLightST").forEach(st => st.kill());
+        
+        // Initial set
+        gsap.set(guidingLight, { x: headerData[0].x, y: headerData[0].y });
+        
+        ScrollTrigger.create({
+            id: "guidingLightST",
+            trigger: document.body,
+            start: "top top",
+            end: "bottom bottom",
+            scrub: true,
+            onUpdate: self => {
+                const scrollY = window.scrollY + window.innerHeight / 2; // Middle of screen
+                
+                // Find closest header based on scroll position
+                let closest = headerData[0];
+                let minDiff = Infinity;
+                
+                headerData.forEach(h => {
+                    let diff = Math.abs(scrollY - h.y);
+                    if (diff < minDiff) {
+                        minDiff = diff;
+                        closest = h;
+                    }
+                });
+                
+                // If within proximity of the closest header, morph into a highlight
+                const proximity = 350; // pixels
+                let isHighlight = minDiff < proximity;
+                let progress = isHighlight ? (1 - (minDiff / proximity)) : 0;
+                
+                // Morphing scale based on the header's width/height relative to the 12px orb
+                let scaleX = isHighlight ? 1 + ((closest.width / 12) * progress * 1.1) : 1;
+                let scaleY = isHighlight ? 1 + ((closest.height / 12) * progress * 1.5) : 1;
+                
+                gsap.to(guidingLight, {
+                    x: closest.x,
+                    y: scrollY + (closest.y - scrollY) * progress, // Pulls towards header as it gets closer
+                    scaleX: scaleX,
+                    scaleY: scaleY,
+                    duration: 0.6,
+                    ease: "elastic.out(1, 0.8)",
+                    overwrite: "auto"
+                });
+                
+                if (isHighlight && progress > 0.7) {
+                    guidingLight.classList.add('guiding-light-highlight');
+                } else {
+                    guidingLight.classList.remove('guiding-light-highlight');
+                }
+            }
+        });
+    }
+
+    // Delay init to ensure layout is settled
+    setTimeout(initGuidingLight, 500);
+    
+    // Re-init on resize
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(initGuidingLight, 300);
     });
 }
