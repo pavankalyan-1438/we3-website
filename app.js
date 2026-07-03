@@ -24,7 +24,83 @@ gsap.ticker.add(() => {
     cursorGlass.style.top = `${cursorGlassY}px`;
 });
 
+// --- Nav Bar Specific Cursor Engine ---
+const liquidNav = document.querySelector('.liquid-nav');
+const navItemsList = document.querySelectorAll('.nav-item');
+
+if (liquidNav) {
+    liquidNav.addEventListener('mouseenter', () => {
+        cursorGlass.classList.add('cursor-lens');
+        cursorDot.style.opacity = '0'; // Hide dot in nav
+    });
+    liquidNav.addEventListener('mouseleave', () => {
+        cursorGlass.classList.remove('cursor-lens');
+        cursorDot.style.opacity = '1';
+        // Reset cursor size if leaving
+        cursorGlass.style.width = '40px';
+        cursorGlass.style.height = '40px';
+    });
+}
+
+navItemsList.forEach(item => {
+    item.addEventListener('mousemove', (e) => {
+        if (window.innerWidth > 900) {
+            const rect = item.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            // Magnetic pull for the cursor towards the button center
+            const pullX = (centerX - e.clientX) * 0.3;
+            const pullY = (centerY - e.clientY) * 0.3;
+            
+            gsap.to(cursorGlass, {
+                x: pullX,
+                y: pullY,
+                duration: 0.2,
+                ease: "power2.out",
+                overwrite: "auto"
+            });
+
+            // Button lift and scale
+            gsap.to(item, {
+                y: -2,
+                scale: 1.03,
+                duration: 0.4,
+                ease: "power2.out",
+                overwrite: "auto"
+            });
+            item.classList.add('magnet-active');
+        }
+    });
+
+    item.addEventListener('mouseleave', () => {
+        if (window.innerWidth > 900) {
+            // Reset cursor pull
+            gsap.to(cursorGlass, {
+                x: 0,
+                y: 0,
+                duration: 0.5,
+                ease: "elastic.out(1, 0.5)",
+                overwrite: "auto"
+            });
+            
+            // Reset button
+            gsap.to(item, {
+                y: 0,
+                scale: 1,
+                duration: 0.6,
+                ease: "elastic.out(1, 0.3)",
+                overwrite: "auto"
+            });
+            item.classList.remove('magnet-active');
+        }
+    });
+});
+
+// --- Generic Magnetic Elements ---
 magneticElements.forEach(el => {
+    if (el.classList.contains('nav-item')) return; // Handled above
+    
     const isMagnetic = el.classList.contains('btn-magnetic');
     el.addEventListener('mousemove', (e) => {
         if(isMagnetic && window.innerWidth > 900) {
@@ -38,20 +114,25 @@ magneticElements.forEach(el => {
                 ease: "power2.out"
             });
         }
-        cursorGlass.style.width = '60px';
-        cursorGlass.style.height = '60px';
-        cursorGlass.style.background = 'rgba(0, 85, 164, 0.1)';
-        cursorDot.style.transform = 'translate(-50%, -50%) scale(0)';
+        // Expand cursor for general hover
+        if (!el.closest('.liquid-nav')) {
+            cursorGlass.style.width = '60px';
+            cursorGlass.style.height = '60px';
+            cursorGlass.style.background = 'rgba(0, 85, 164, 0.1)';
+            cursorDot.style.transform = 'translate(-50%, -50%) scale(0)';
+        }
     });
     
     el.addEventListener('mouseleave', () => {
         if(isMagnetic && window.innerWidth > 900) {
             gsap.to(el, { x: 0, y: 0, duration: 0.6, ease: "elastic.out(1, 0.3)" });
         }
-        cursorGlass.style.width = '40px';
-        cursorGlass.style.height = '40px';
-        cursorGlass.style.background = 'var(--glass-bg)';
-        cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
+        if (!el.closest('.liquid-nav')) {
+            cursorGlass.style.width = '40px';
+            cursorGlass.style.height = '40px';
+            cursorGlass.style.background = 'var(--glass-bg)';
+            cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
+        }
     });
 
     el.addEventListener('click', () => {
