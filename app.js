@@ -88,54 +88,18 @@ function updateIndicator(targetEl, initial = false) {
     
     if (initial) {
         gsap.set(indicator, { x: xPos, y: yPos, width: rect.width, height: rect.height });
-        gsap.set(ghost, { opacity: 0 });
+        gsap.set(ghost, { opacity: 0 }); // hide ghost permanently
     } else {
-        const currentX = gsap.getProperty(indicator, "x") || xPos;
-        const currentW = gsap.getProperty(indicator, "width") || rect.width;
-        
-        const isMovingRight = xPos > currentX;
-        
-        gsap.killTweensOf(indicator); 
-        gsap.killTweensOf(ghost);
-        
-        // Ghost stays behind and shrinks (creates the breaking droplet effect)
-        gsap.set(ghost, { x: currentX, y: yPos, width: currentW, height: rect.height, scaleX: 1, scaleY: 1, opacity: 1 });
-        gsap.to(ghost, {
-            scaleX: 0.1,
-            scaleY: 0.1,
-            x: currentX + (xPos - currentX) * 0.25, // Pulled slightly towards destination
+        gsap.killTweensOf(indicator);
+        gsap.to(indicator, {
+            x: xPos,
+            y: yPos,
+            width: rect.width,
+            height: rect.height,
             duration: 0.5,
-            ease: "power2.in",
-            onComplete: () => gsap.set(ghost, { opacity: 0 })
+            ease: "elastic.out(1, 0.75)",
+            force3D: true
         });
-
-        // Main indicator stretches from current to target to create a physical bridge
-        gsap.set(indicator, { x: currentX, y: yPos, width: currentW, height: rect.height });
-        const tl = gsap.timeline();
-        
-        if (isMovingRight) {
-            tl.to(indicator, {
-                width: (xPos - currentX) + rect.width,
-                duration: 0.35,
-                ease: "power2.inOut"
-            }).to(indicator, {
-                x: xPos,
-                width: rect.width,
-                duration: 0.45,
-                ease: "back.out(1.2)"
-            }, "-=0.05");
-        } else {
-            tl.to(indicator, {
-                x: xPos,
-                width: (currentX - xPos) + currentW,
-                duration: 0.35,
-                ease: "power2.inOut"
-            }).to(indicator, {
-                width: rect.width,
-                duration: 0.45,
-                ease: "back.out(1.2)"
-            }, "-=0.05");
-        }
     }
     navItems.forEach(item => item.classList.remove('active'));
     targetEl.classList.add('active');
@@ -157,27 +121,35 @@ if (bgPatternPoint) {
     gsap.set(bgPatternPoint, { xPercent: -50, yPercent: -50, opacity: 0 });
 }
 
-window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (scrollY >= (sectionTop - sectionHeight / 3)) {
-            current = section.getAttribute('id');
+let currentSectionId = '';
+
+const observerOptions = {
+    root: null,
+    rootMargin: '-50% 0px -50% 0px',
+    threshold: 0
+};
+
+const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            currentSectionId = entry.target.getAttribute('id');
+            if (!isNavClicking) {
+                navItems.forEach(item => {
+                    if (item.dataset.target === currentSectionId && !item.classList.contains('active')) {
+                        updateIndicator(item);
+                    }
+                });
+            }
         }
     });
+}, observerOptions);
 
-    if (!isNavClicking) {
-        navItems.forEach(item => {
-            if (item.dataset.target === current && !item.classList.contains('active')) {
-                updateIndicator(item);
-            }
-        });
-    }
+sections.forEach(section => sectionObserver.observe(section));
 
-    // Pattern Point Logic
-    if (bgPatternPoint) {
-        const activeSection = document.getElementById(current) || sections[0];
+window.addEventListener('scroll', () => {
+    // Pattern Point Logic follows the active section header
+    if (bgPatternPoint && currentSectionId) {
+        const activeSection = document.getElementById(currentSectionId);
         const header = activeSection.querySelector('.section-title, .hero-title');
         
         if (header) {
@@ -229,6 +201,25 @@ tiltCards.forEach(card => {
         }
         gsap.to(card, { rotateX: 0, rotateY: 0, duration: 1, ease: "elastic.out(1, 0.3)" });
     });
+});
+
+// --- Background Flow Animation ---
+if (document.querySelector('.ambient-pattern')) {
+    gsap.to('.ambient-pattern', {
+        yPercent: 10,
+        ease: "none",
+        scrollTrigger: { trigger: document.body, start: "top top", end: "bottom bottom", scrub: true }
+    });
+}
+gsap.to('.glow-1', {
+    yPercent: 25,
+    ease: "none",
+    scrollTrigger: { trigger: document.body, start: "top top", end: "bottom bottom", scrub: true }
+});
+gsap.to('.glow-2', {
+    yPercent: -20,
+    ease: "none",
+    scrollTrigger: { trigger: document.body, start: "top top", end: "bottom bottom", scrub: true }
 });
 
 // --- GSAP Scroll Animations ---
