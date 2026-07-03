@@ -114,10 +114,6 @@ navItems.forEach(item => {
 });
 
 const sections = document.querySelectorAll('section');
-const bgPatternPoint = document.getElementById('bg-pattern-point');
-if (bgPatternPoint) {
-    gsap.set(bgPatternPoint, { xPercent: -50, yPercent: -50, opacity: 0 });
-}
 
 let currentSectionId = '';
 
@@ -143,30 +139,6 @@ const sectionObserver = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 sections.forEach(section => sectionObserver.observe(section));
-
-window.addEventListener('scroll', () => {
-    // Pattern Point Logic follows the active section header
-    if (bgPatternPoint && currentSectionId) {
-        const activeSection = document.getElementById(currentSectionId);
-        const header = activeSection.querySelector('.section-title, .hero-title');
-        
-        if (header) {
-            const rect = header.getBoundingClientRect();
-            // Target coordinates relative to viewport (because .ambient-background is fixed)
-            const targetX = rect.left + rect.width / 2;
-            const targetY = rect.top + rect.height / 2;
-            
-            gsap.to(bgPatternPoint, {
-                x: targetX,
-                y: targetY,
-                opacity: 1,
-                duration: 1.5,
-                ease: "power2.out",
-                overwrite: "auto"
-            });
-        }
-    }
-});
 
 // --- 3D Tilt Cards ---
 const tiltCards = document.querySelectorAll('.tilt-card');
