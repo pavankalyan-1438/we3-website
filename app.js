@@ -8,28 +8,29 @@ const magneticElements = document.querySelectorAll('.btn-magnetic, a, input, tex
 
 let mouseX = window.innerWidth / 2;
 let mouseY = window.innerHeight / 2;
-let cursorGlassX = mouseX;
-let cursorGlassY = mouseY;
-
-window.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    cursorDot.style.left = `${mouseX}px`;
-    cursorDot.style.top = `${mouseY}px`;
-});
-
+let dotX = mouseX;
+let dotY = mouseY;
 let lastMouseX = mouseX;
 let lastMouseY = mouseY;
 let isCursorInNav = false;
 
+window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    // We update dotX smoothly in the ticker, but we can set cursorDot directly if we want 0 latency.
+    // Since we are stretching it, we need to let the ticker handle the position smoothly to match velocity.
+});
+
+gsap.set([cursorDot, cursorHalo], { xPercent: -50, yPercent: -50 });
+
 gsap.ticker.add(() => {
-    cursorGlassX += (mouseX - cursorGlassX) * 0.15;
-    cursorGlassY += (mouseY - cursorGlassY) * 0.15;
+    dotX += (mouseX - dotX) * 0.15;
+    dotY += (mouseY - dotY) * 0.15;
     
-    let velX = cursorGlassX - lastMouseX;
-    let velY = cursorGlassY - lastMouseY;
-    lastMouseX = cursorGlassX;
-    lastMouseY = cursorGlassY;
+    let velX = dotX - lastMouseX;
+    let velY = dotY - lastMouseY;
+    lastMouseX = dotX;
+    lastMouseY = dotY;
     
     let velocity = Math.sqrt(velX*velX + velY*velY);
     let angle = Math.atan2(velY, velX) * (180 / Math.PI);
@@ -40,22 +41,21 @@ gsap.ticker.add(() => {
     let blurPx = 0;
     
     if (velocity > 0.5 && !isCursorInNav && window.innerWidth > 900) {
-        let stretch = Math.min(velocity * 0.04, 0.6); // max stretch 0.6
+        let stretch = Math.min(velocity * 0.05, 0.8);
         scaleX = 1 + stretch;
-        scaleY = 1 - (stretch * 0.4);
+        scaleY = 1 - (stretch * 0.3);
         rotation = angle;
-        blurPx = Math.min(velocity * 0.1, 4); // Real motion blur while moving
+        blurPx = Math.min(velocity * 0.15, 5); 
     }
-    
-    cursorGlass.style.left = `${cursorGlassX}px`;
-    cursorGlass.style.top = `${cursorGlassY}px`;
     
     if (cursorHalo) {
-        cursorHalo.style.left = `${cursorGlassX}px`;
-        cursorHalo.style.top = `${cursorGlassY}px`;
+        cursorHalo.style.left = `${dotX}px`;
+        cursorHalo.style.top = `${dotY}px`;
     }
     
-    gsap.set(cursorGlass, { 
+    gsap.set(cursorDot, { 
+        left: mouseX,
+        top: mouseY,
         scaleX: scaleX, 
         scaleY: scaleY, 
         rotation: rotation,
