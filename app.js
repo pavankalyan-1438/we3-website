@@ -70,7 +70,7 @@ magneticElements.forEach(el => {
 });
 
 // --- VisionOS Nav Engine ---
-const navItems = document.querySelectorAll('.nav-container .nav-item');
+const navItems = document.querySelectorAll('#nav-container .nav-item');
 const indicator = document.querySelector('.nav-active-indicator');
 const navContainer = document.getElementById('nav-container');
 const liquidNav = document.querySelector('.liquid-nav');
