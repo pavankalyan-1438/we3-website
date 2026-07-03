@@ -69,26 +69,24 @@ magneticElements.forEach(el => {
     });
 });
 
-// --- Liquid Nav Melting Engine ---
+// --- VisionOS Nav Engine ---
 const navItems = document.querySelectorAll('.nav-container .nav-item');
 const indicator = document.querySelector('.nav-active-indicator');
-const ghost = document.querySelector('.nav-ghost-indicator');
-const navGooeyLayer = document.querySelector('.nav-gooey-layer');
 const navContainer = document.getElementById('nav-container');
+const liquidNav = document.querySelector('.liquid-nav');
 let isNavClicking = false;
 
 function updateIndicator(targetEl, initial = false) {
     if (!targetEl || window.innerWidth <= 900) return;
     const rect = targetEl.getBoundingClientRect();
-    const gooeyRect = navGooeyLayer.getBoundingClientRect();
+    const navRect = liquidNav.getBoundingClientRect();
     
-    // Exact absolute position within the gooey layer's coordinate space
-    const xPos = rect.left - gooeyRect.left; 
-    const yPos = rect.top - gooeyRect.top; 
+    // Exact absolute position within the nav's coordinate space
+    const xPos = rect.left - navRect.left; 
+    const yPos = rect.top - navRect.top; 
     
     if (initial) {
         gsap.set(indicator, { x: xPos, y: yPos, width: rect.width, height: rect.height });
-        gsap.set(ghost, { opacity: 0 }); // hide ghost permanently
     } else {
         gsap.killTweensOf(indicator);
         gsap.to(indicator, {
@@ -204,13 +202,7 @@ tiltCards.forEach(card => {
 });
 
 // --- Background Flow Animation ---
-if (document.querySelector('.ambient-pattern')) {
-    gsap.to('.ambient-pattern', {
-        yPercent: 10,
-        ease: "none",
-        scrollTrigger: { trigger: document.body, start: "top top", end: "bottom bottom", scrub: true }
-    });
-}
+
 gsap.to('.glow-1', {
     yPercent: 25,
     ease: "none",
