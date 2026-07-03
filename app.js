@@ -37,52 +37,63 @@ gsap.ticker.add(() => {
     let scaleY = 1;
     let rotation = 0;
     
-    let blurPx = 0;
-    if (velocity > 0.5 && !isCursorInNav && window.innerWidth > 900) {
+    if (velocity > 0.5 && window.innerWidth > 900) {
         let stretch = Math.min(velocity * 0.04, 0.6); // max stretch 0.6
         scaleX = 1 + stretch;
         scaleY = 1 - (stretch * 0.4);
         rotation = angle;
-        blurPx = Math.min(velocity * 0.1, 4); // Real motion blur
     }
     
     cursorGlass.style.left = `${cursorGlassX}px`;
     cursorGlass.style.top = `${cursorGlassY}px`;
     
-    if (!isCursorInNav) {
-        gsap.set(cursorGlass, { 
-            scaleX: scaleX, 
-            scaleY: scaleY, 
-            rotation: rotation,
-            filter: `blur(${blurPx}px)` 
-        });
-    }
+    // Always sharp, just stretches with velocity
+    gsap.set(cursorGlass, { 
+        scaleX: scaleX, 
+        scaleY: scaleY, 
+        rotation: rotation
+    });
 });
 
 // --- Nav Bar Advanced Cursor Engine ---
 const liquidNav = document.querySelector('.liquid-nav');
 const navItemsList = document.querySelectorAll('.nav-item');
+const navGlassLens = document.querySelector('.nav-glass-lens');
 
-if (liquidNav) {
+if (liquidNav && navGlassLens) {
     liquidNav.addEventListener('mouseenter', () => {
-        isCursorInNav = true;
-        cursorGlass.classList.add('cursor-lens');
-        cursorDot.style.opacity = '0';
-        gsap.to(cursorGlass, { scaleX: 1, scaleY: 1, rotation: 0, filter: 'blur(0px)', duration: 0.3, ease: "elastic.out(1, 0.8)" });
+        gsap.to(navGlassLens, { opacity: 1, duration: 0.3, ease: "power2.out" });
     });
     
     liquidNav.addEventListener('mouseleave', () => {
-        isCursorInNav = false;
-        cursorGlass.classList.remove('cursor-lens');
-        cursorDot.style.opacity = '1';
+        gsap.to(navGlassLens, { opacity: 0, duration: 0.3, ease: "power2.out" });
         
         navItemsList.forEach(item => {
-            gsap.to(item, { scale: 1, filter: 'brightness(1)', duration: 0.4, ease: "power2.out" });
+            gsap.to(item, {
+                scale: 1,
+                color: "var(--text-primary)",
+                filter: 'brightness(1) saturate(1)',
+                duration: 0.4,
+                ease: "power2.out",
+                overwrite: "auto"
+            });
         });
     });
     
     liquidNav.addEventListener('mousemove', (e) => {
         if (window.innerWidth <= 900) return;
+        
+        const navRect = liquidNav.getBoundingClientRect();
+        const localX = e.clientX - navRect.left - 25; // 25 is half of 50px lens width
+        const localY = e.clientY - navRect.top - 25;
+        
+        gsap.to(navGlassLens, {
+            x: localX,
+            y: localY,
+            duration: 0.2, // soft spring follow
+            ease: "power2.out",
+            overwrite: "auto"
+        });
         
         navItemsList.forEach(item => {
             const rect = item.getBoundingClientRect();
@@ -90,7 +101,7 @@ if (liquidNav) {
             const centerY = rect.top + rect.height / 2;
             
             const dist = Math.hypot(centerX - e.clientX, centerY - e.clientY);
-            const influenceRadius = 70;
+            const influenceRadius = 50;
             
             if (dist < influenceRadius) {
                 const progress = 1 - (dist / influenceRadius);
@@ -98,20 +109,22 @@ if (liquidNav) {
                 let isDirectHover = e.clientX >= rect.left && e.clientX <= rect.right && 
                                     e.clientY >= rect.top && e.clientY <= rect.bottom;
                 
-                let scale = 1 + (progress * 0.015);
-                let brightness = 1 + (progress * 0.05); // Very subtle proximity
+                let scale = 1 + (progress * 0.02);
+                let brightness = 1 + (progress * 0.1);
+                let saturate = 1 + (progress * 0.2);
                 let color = "var(--text-primary)";
                 
                 if (isDirectHover) {
-                    scale = 1.08;
-                    brightness = 1.25;
-                    color = "var(--accent-color)"; // Highlight direct hover
+                    scale = 1.04;
+                    brightness = 1.15;
+                    saturate = 1.5;
+                    color = "var(--accent-color)";
                 }
                 
                 gsap.to(item, {
                     scale: scale,
                     color: color,
-                    filter: `brightness(${brightness})`,
+                    filter: `brightness(${brightness}) saturate(${saturate})`,
                     duration: 0.25,
                     ease: "power2.out",
                     overwrite: "auto"
@@ -120,7 +133,7 @@ if (liquidNav) {
                 gsap.to(item, {
                     scale: 1,
                     color: "var(--text-primary)",
-                    filter: 'brightness(1)',
+                    filter: 'brightness(1) saturate(1)',
                     duration: 0.4,
                     ease: "power2.out",
                     overwrite: "auto"
@@ -131,6 +144,8 @@ if (liquidNav) {
 }
 
 magneticElements.forEach(el => {
+    if (el.classList.contains('nav-item')) return; // Skip nav items
+    
     const isMagnetic = el.classList.contains('btn-magnetic');
     el.addEventListener('mousemove', (e) => {
         if(isMagnetic && window.innerWidth > 900) {
