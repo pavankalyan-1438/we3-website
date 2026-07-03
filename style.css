@@ -1,18 +1,18 @@
 /* Core Variables */
 :root {
-    --bg-color: #07070A;
-    --surface-color: #0F1117;
-    --glass-bg: rgba(255,255,255,0.08);
-    --glass-border: rgba(255,255,255,0.12);
-    --text-primary: #F8F9FB;
-    --text-secondary: #9CA3AF;
-    --accent-color: #6C63FF;
-    --glow-color: rgba(108,99,255,0.25);
+    --bg-color: #FFFFFF;
+    --surface-color: #F8F9FA;
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(0, 0, 0, 0.08);
+    --text-primary: #111827;
+    --text-secondary: #4B5563;
+    --accent-color: #0055A4;
+    --glow-color: rgba(0, 85, 164, 0.25);
     
     --glass-blur: 24px;
     --max-width: 1200px;
-    --nav-indicator: #FFFFFF;
-    --nav-active-text: #000000;
+    --nav-indicator: #0055A4;
+    --nav-active-text: #FFFFFF;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -48,7 +48,7 @@ a { color: inherit; text-decoration: none; }
 .ambient-background {
     position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
     z-index: -1; overflow: hidden;
-    background: radial-gradient(circle at center, #0a0a0f 0%, #07070A 100%);
+    background: radial-gradient(circle at center, #ffffff 0%, #f0f0f0 100%);
 }
 
 .ambient-glow {

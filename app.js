@@ -40,7 +40,7 @@ magneticElements.forEach(el => {
         }
         cursorGlass.style.width = '60px';
         cursorGlass.style.height = '60px';
-        cursorGlass.style.background = 'rgba(108, 99, 255, 0.1)';
+        cursorGlass.style.background = 'rgba(0, 85, 164, 0.1)';
         cursorDot.style.transform = 'translate(-50%, -50%) scale(0)';
     });
     
