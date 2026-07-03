@@ -3,6 +3,7 @@ gsap.registerPlugin(ScrollTrigger);
 // --- Cursor & Magnetic ---
 const cursorDot = document.getElementById('cursor-dot');
 const cursorGlass = document.getElementById('cursor-glass');
+const cursorHalo = document.getElementById('cursor-halo');
 const magneticElements = document.querySelectorAll('.btn-magnetic, a, input, textarea, button, select');
 
 let mouseX = window.innerWidth / 2;
@@ -24,8 +25,42 @@ let isCursorInNav = false;
 gsap.ticker.add(() => {
     cursorGlassX += (mouseX - cursorGlassX) * 0.15;
     cursorGlassY += (mouseY - cursorGlassY) * 0.15;
+    
+    let velX = cursorGlassX - lastMouseX;
+    let velY = cursorGlassY - lastMouseY;
+    lastMouseX = cursorGlassX;
+    lastMouseY = cursorGlassY;
+    
+    let velocity = Math.sqrt(velX*velX + velY*velY);
+    let angle = Math.atan2(velY, velX) * (180 / Math.PI);
+    
+    let scaleX = 1;
+    let scaleY = 1;
+    let rotation = 0;
+    let blurPx = 0;
+    
+    if (velocity > 0.5 && !isCursorInNav && window.innerWidth > 900) {
+        let stretch = Math.min(velocity * 0.04, 0.6); // max stretch 0.6
+        scaleX = 1 + stretch;
+        scaleY = 1 - (stretch * 0.4);
+        rotation = angle;
+        blurPx = Math.min(velocity * 0.1, 4); // Real motion blur while moving
+    }
+    
     cursorGlass.style.left = `${cursorGlassX}px`;
     cursorGlass.style.top = `${cursorGlassY}px`;
+    
+    if (cursorHalo) {
+        cursorHalo.style.left = `${cursorGlassX}px`;
+        cursorHalo.style.top = `${cursorGlassY}px`;
+    }
+    
+    gsap.set(cursorGlass, { 
+        scaleX: scaleX, 
+        scaleY: scaleY, 
+        rotation: rotation,
+        filter: `blur(${blurPx}px)` 
+    });
 });
 
 magneticElements.forEach(el => {
@@ -84,6 +119,17 @@ const navContainer = document.getElementById('nav-container');
 const liquidNav = document.querySelector('.liquid-nav');
 let isNavClicking = false;
 
+if (liquidNav) {
+    liquidNav.addEventListener('mouseenter', () => {
+        isCursorInNav = true;
+        if (cursorHalo) gsap.to(cursorHalo, { opacity: 1, duration: 0.3, ease: "power2.out" });
+    });
+    liquidNav.addEventListener('mouseleave', () => {
+        isCursorInNav = false;
+        if (cursorHalo) gsap.to(cursorHalo, { opacity: 0, duration: 0.3, ease: "power2.out" });
+    });
+}
+
 function updateIndicator(targetEl, initial = false) {
     if (!targetEl || window.innerWidth <= 900) return;
     const rect = targetEl.getBoundingClientRect();
@@ -114,6 +160,18 @@ function updateIndicator(targetEl, initial = false) {
 setTimeout(() => updateIndicator(document.querySelector('.nav-item.active'), true), 200);
 
 navItems.forEach(item => {
+    item.addEventListener('mouseenter', () => {
+        if (window.innerWidth > 900) {
+            gsap.to(item, { scale: 1.04, filter: 'brightness(1.15) saturate(1.2)', duration: 0.3, ease: "power2.out", overwrite: "auto" });
+        }
+    });
+    
+    item.addEventListener('mouseleave', () => {
+        if (window.innerWidth > 900) {
+            gsap.to(item, { scale: 1, filter: 'brightness(1) saturate(1)', duration: 0.4, ease: "power2.out", overwrite: "auto" });
+        }
+    });
+
     item.addEventListener('click', (e) => {
         isNavClicking = true;
         updateIndicator(e.target);
