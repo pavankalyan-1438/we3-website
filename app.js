@@ -116,9 +116,14 @@ const navItems = document.querySelectorAll('#nav-container .nav-item');
 const indicator = document.querySelector('.nav-active-indicator');
 const navContainer = document.getElementById('nav-container');
 const liquidNav = document.querySelector('.liquid-nav-wrapper');
-const liquidNavCapsule = document.querySelector('.liquid-nav-capsule');
-const navGlassBg = document.querySelector('.nav-glass-bg');
-const navLogo = document.querySelector('.nav-logo');
+const centerContainer = document.querySelector('.center-container');
+const logoContainer = document.querySelector('.logo-container');
+const ctaContainer = document.querySelector('.cta-container');
+
+const svgLogo = document.querySelector('.logo-blob');
+const svgCenter = document.querySelector('.center-blob');
+const svgCta = document.querySelector('.cta-blob');
+
 let isNavClicking = false;
 
 if (liquidNav) {
@@ -132,42 +137,53 @@ if (liquidNav) {
     });
 }
 
-if (window.innerWidth > 900 && navGlassBg && navLogo) {
-    const logoWidth = navLogo.offsetWidth + 16; // width + gap
+function syncMask() {
+    if (!liquidNav || window.innerWidth <= 900) return;
+    const wRect = liquidNav.getBoundingClientRect();
     
-    gsap.to(navGlassBg, {
+    const getRel = (el) => {
+        if (!el) return {x:0, y:0, w:0, h:0};
+        const r = el.getBoundingClientRect();
+        return {
+            x: r.left - wRect.left,
+            y: r.top - wRect.top,
+            width: r.width,
+            height: r.height
+        };
+    };
+
+    if (svgLogo && logoContainer) gsap.set(svgLogo, { attr: getRel(logoContainer) });
+    if (svgCenter && centerContainer) gsap.set(svgCenter, { attr: getRel(centerContainer) });
+    if (svgCta && ctaContainer) gsap.set(svgCta, { attr: getRel(ctaContainer) });
+}
+
+if (window.innerWidth > 900 && logoContainer && ctaContainer) {
+    // Initial state: push them inwards so they merge into a single capsule
+    gsap.set(logoContainer, { x: 30 });
+    gsap.set(ctaContainer, { x: -30 });
+    syncMask();
+
+    // Animation to separate them
+    gsap.to([logoContainer, ctaContainer], {
         scrollTrigger: {
             trigger: document.body,
-            start: "10px top",
-            end: "50px top",
-            scrub: 1.2
+            start: "40px top",
+            end: "100px top",
+            scrub: 1.5
         },
-        width: `calc(100% + ${logoWidth}px)`,
-        x: -logoWidth,
-        ease: "power1.inOut"
+        x: 0,
+        ease: "power2.inOut"
     });
-    
-    gsap.to(navContainer, {
-        scrollTrigger: {
-            trigger: document.body,
-            start: "10px top",
-            end: "50px top",
-            scrub: 1.2
-        },
-        x: 8, // subtle shift right
-        ease: "power1.inOut",
-        onUpdate: () => {
-            updateIndicator(document.querySelector('.nav-item.active'));
-        }
-    });
+
+    gsap.ticker.add(syncMask);
 }
 
 function updateIndicator(targetEl, initial = false) {
-    if (!targetEl || window.innerWidth <= 900) return;
+    if (!targetEl || window.innerWidth <= 900 || !centerContainer) return;
     const rect = targetEl.getBoundingClientRect();
-    const navRect = liquidNavCapsule.getBoundingClientRect();
+    const navRect = centerContainer.getBoundingClientRect();
     
-    // Exact absolute position within the nav's coordinate space
+    // Exact absolute position within the center container's coordinate space
     const xPos = rect.left - navRect.left; 
     const yPos = rect.top - navRect.top; 
     

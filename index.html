@@ -20,15 +20,34 @@
 
     <!-- Navigation -->
     <nav class="liquid-nav-wrapper">
-        <a href="#hero" class="nav-logo btn-magnetic">
-            <img src="we3-logo.png" alt="WE3 Logo">
-        </a>
+        <!-- SVG Mask Definitions -->
+        <svg class="nav-svg-defs" width="0" height="0" style="position: absolute; pointer-events: none;">
+            <defs>
+                <filter id="goo">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
+                    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -8" result="goo" />
+                    <feBlend in="SourceGraphic" in2="goo" />
+                </filter>
+                <mask id="gooey-mask">
+                    <g filter="url(#goo)">
+                        <rect class="mask-blob logo-blob" fill="white" rx="20" />
+                        <rect class="mask-blob center-blob" fill="white" rx="20" />
+                        <rect class="mask-blob cta-blob" fill="white" rx="20" />
+                    </g>
+                </mask>
+            </defs>
+        </svg>
+
+        <div class="nav-glass-bg"></div>
+
+        <div class="nav-item-container logo-container">
+            <a href="#hero" class="nav-logo btn-magnetic">
+                <img src="we3-logo.png" alt="WE3 Logo">
+            </a>
+        </div>
         
-        <div class="liquid-nav-capsule">
-            <div class="nav-glass-bg"></div>
-            <!-- VisionOS Active Pill Indicator -->
+        <div class="nav-item-container center-container">
             <div class="nav-active-indicator"></div>
-            
             <div class="nav-links" id="nav-container">
                 <a href="#hero" class="nav-item active btn-magnetic" data-target="hero">Home</a>
                 <a href="#about" class="nav-item btn-magnetic" data-target="about">About</a>
@@ -36,8 +55,10 @@
                 <a href="#services" class="nav-item btn-magnetic" data-target="services">Services</a>
             </div>
         </div>
-        
-        <a href="#contact" class="nav-cta btn-magnetic">It's A Start</a>
+
+        <div class="nav-item-container cta-container">
+            <a href="#contact" class="nav-cta btn-magnetic" data-target="contact">It's A Start</a>
+        </div>
     </nav>
 
     <main id="smooth-wrapper">
