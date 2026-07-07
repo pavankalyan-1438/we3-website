@@ -106,6 +106,11 @@ a { color: inherit; text-decoration: none; }
     padding: 20px;
 }
 
+@keyframes glassShimmer {
+    0% { transform: translateX(-150%); }
+    100% { transform: translateX(150%); }
+}
+
 .nav-glass-bg {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     background: var(--glass-bg); backdrop-filter: blur(var(--glass-blur)) saturate(180%);
@@ -113,14 +118,29 @@ a { color: inherit; text-decoration: none; }
     mask: url(#gooey-mask);
     -webkit-mask: url(#gooey-mask);
     filter: drop-shadow(0 8px 32px rgba(0,0,0,0.08)) drop-shadow(0 0 1px rgba(255,255,255,0.3));
+    overflow: hidden;
+}
+
+.nav-glass-bg::after {
+    content: "";
+    position: absolute; top: 0; left: 0; width: 200%; height: 100%;
+    background: linear-gradient(110deg, transparent 20%, rgba(255,255,255,0.15) 30%, transparent 40%);
+    animation: glassShimmer 8s infinite linear;
+    pointer-events: none;
 }
 
 .nav-item-container {
     position: relative;
     z-index: 3;
     display: flex; align-items: center; justify-content: center;
-    padding: 8px;
+    height: 52px;
+    border-radius: 9999px;
+    padding: 0 16px;
     will-change: transform;
+    box-shadow: 
+        inset 0 1px 1px rgba(255,255,255,0.3), 
+        inset 0 -1px 2px rgba(0,0,0,0.1);
+    background: rgba(255,255,255, 0.02);
 }
 
 .nav-active-indicator {
@@ -140,28 +160,26 @@ a { color: inherit; text-decoration: none; }
     cursor: none;
     transition: filter 0.3s ease, transform 0.3s ease;
     will-change: transform, filter;
-    padding-left: 8px; padding-right: 8px;
 }
 
 .nav-cta {
-    padding: 10px 20px; border-radius: 30px; font-weight: 500; font-size: 0.9rem;
+    padding: 0 4px; font-weight: 500; font-size: 0.9rem;
     position: relative; transition: color 0.3s ease; cursor: none;
+    height: 100%; display: flex; align-items: center;
 }
 .nav-cta:hover { color: var(--accent-color); }
 
 .nav-logo img {
-    height: 22px; width: auto; object-fit: contain;
+    height: 32px; width: auto; object-fit: contain;
     filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
-    transition: filter 0.3s ease;
-}
-
-.nav-logo:hover {
-    transform: scale(1.04);
+    transition: filter 0.3s ease, transform 0.3s ease;
 }
 
 .nav-logo:hover img {
-    filter: brightness(1.15) drop-shadow(0 0 12px var(--accent-color));
+    transform: scale(1.03);
+    filter: drop-shadow(0 0 12px var(--accent-color)) brightness(1.15);
 }
+
 
 .nav-item {
     padding: 10px 20px; border-radius: 30px; font-weight: 500; font-size: 0.9rem;
