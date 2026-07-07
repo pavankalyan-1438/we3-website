@@ -115,7 +115,10 @@ magneticElements.forEach(el => {
 const navItems = document.querySelectorAll('#nav-container .nav-item');
 const indicator = document.querySelector('.nav-active-indicator');
 const navContainer = document.getElementById('nav-container');
-const liquidNav = document.querySelector('.liquid-nav');
+const liquidNav = document.querySelector('.liquid-nav-wrapper');
+const liquidNavCapsule = document.querySelector('.liquid-nav-capsule');
+const navGlassBg = document.querySelector('.nav-glass-bg');
+const navLogo = document.querySelector('.nav-logo');
 let isNavClicking = false;
 
 if (liquidNav) {
@@ -129,10 +132,40 @@ if (liquidNav) {
     });
 }
 
+if (window.innerWidth > 900 && navGlassBg && navLogo) {
+    const logoWidth = navLogo.offsetWidth + 16; // width + gap
+    
+    gsap.to(navGlassBg, {
+        scrollTrigger: {
+            trigger: document.body,
+            start: "10px top",
+            end: "50px top",
+            scrub: 1.2
+        },
+        width: `calc(100% + ${logoWidth}px)`,
+        x: -logoWidth,
+        ease: "power1.inOut"
+    });
+    
+    gsap.to(navContainer, {
+        scrollTrigger: {
+            trigger: document.body,
+            start: "10px top",
+            end: "50px top",
+            scrub: 1.2
+        },
+        x: 8, // subtle shift right
+        ease: "power1.inOut",
+        onUpdate: () => {
+            updateIndicator(document.querySelector('.nav-item.active'));
+        }
+    });
+}
+
 function updateIndicator(targetEl, initial = false) {
     if (!targetEl || window.innerWidth <= 900) return;
     const rect = targetEl.getBoundingClientRect();
-    const navRect = liquidNav.getBoundingClientRect();
+    const navRect = liquidNavCapsule.getBoundingClientRect();
     
     // Exact absolute position within the nav's coordinate space
     const xPos = rect.left - navRect.left; 
