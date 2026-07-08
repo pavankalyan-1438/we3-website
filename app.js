@@ -115,15 +115,7 @@ magneticElements.forEach(el => {
 const navItems = document.querySelectorAll('#nav-container .nav-item');
 const indicator = document.querySelector('.nav-active-indicator');
 const navContainer = document.getElementById('nav-container');
-const liquidNav = document.querySelector('.liquid-nav-wrapper');
-const centerContainer = document.querySelector('.center-container');
-const logoContainer = document.querySelector('.logo-container');
-const ctaContainer = document.querySelector('.cta-container');
-
-const svgLogo = document.querySelector('.logo-blob');
-const svgCenter = document.querySelector('.center-blob');
-const svgCta = document.querySelector('.cta-blob');
-
+const liquidNav = document.querySelector('.liquid-nav');
 let isNavClicking = false;
 
 if (liquidNav) {
@@ -137,54 +129,12 @@ if (liquidNav) {
     });
 }
 
-function syncMask() {
-    if (!liquidNav || window.innerWidth <= 900) return;
-    const wRect = liquidNav.getBoundingClientRect();
-    
-    const getRel = (el) => {
-        if (!el) return {x:0, y:0, w:0, h:0, rx:0};
-        const r = el.getBoundingClientRect();
-        return {
-            x: r.left - wRect.left,
-            y: r.top - wRect.top,
-            width: r.width,
-            height: r.height,
-            rx: r.height / 2
-        };
-    };
-
-    if (svgLogo && logoContainer) gsap.set(svgLogo, { attr: getRel(logoContainer) });
-    if (svgCenter && centerContainer) gsap.set(svgCenter, { attr: getRel(centerContainer) });
-    if (svgCta && ctaContainer) gsap.set(svgCta, { attr: getRel(ctaContainer) });
-}
-
-if (window.innerWidth > 900 && logoContainer && ctaContainer) {
-    // Initial state: push them inwards so they merge into a single capsule
-    gsap.set(logoContainer, { x: 30 });
-    gsap.set(ctaContainer, { x: -30 });
-    syncMask();
-
-    // Animation to separate them
-    gsap.to([logoContainer, ctaContainer], {
-        scrollTrigger: {
-            trigger: document.body,
-            start: "40px top",
-            end: "100px top",
-            scrub: 1.5
-        },
-        x: 0,
-        ease: "power2.inOut"
-    });
-
-    gsap.ticker.add(syncMask);
-}
-
 function updateIndicator(targetEl, initial = false) {
-    if (!targetEl || window.innerWidth <= 900 || !centerContainer) return;
+    if (!targetEl || window.innerWidth <= 900) return;
     const rect = targetEl.getBoundingClientRect();
-    const navRect = centerContainer.getBoundingClientRect();
+    const navRect = liquidNav.getBoundingClientRect();
     
-    // Exact absolute position within the center container's coordinate space
+    // Exact absolute position within the nav's coordinate space
     const xPos = rect.left - navRect.left; 
     const yPos = rect.top - navRect.top; 
     
