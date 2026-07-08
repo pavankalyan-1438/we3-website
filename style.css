@@ -190,35 +190,7 @@ a { color: inherit; text-decoration: none; }
     background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--glow-color), transparent 40%);
 }
 .tilt-card:hover .card-glow { opacity: 1; }
-.glass-card { padding: 40px; transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
-
-/* Wireframe Mode */
-.wireframe-mode {
-    background: rgba(255, 255, 255, 0.01) !important;
-    backdrop-filter: blur(0px) !important;
-    border: 1px dashed rgba(255, 255, 255, 0.2) !important;
-    box-shadow: none !important;
-}
-.wireframe-mode h3, .wireframe-mode p {
-    color: rgba(255, 255, 255, 0.4) !important;
-    font-family: 'Inter', monospace !important;
-    transition: all 1s ease;
-}
-.wireframe-mode h3 {
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-/* Deliver Phase High-Fidelity Glass */
-.deliver-glass {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(24px) saturate(200%);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 15px 45px rgba(0,0,0,0.4), inset 0 1px 0 0 rgba(255,255,255,0.2);
-}
-.deliver-glass:hover {
-    box-shadow: 0 25px 60px rgba(0,0,0,0.6), inset 0 1px 0 0 rgba(255,255,255,0.3);
-}
+.glass-card { padding: 40px; }
 
 /* Sections */
 section { padding: 160px 24px; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; position: relative; }
@@ -227,29 +199,8 @@ section { padding: 160px 24px; min-height: 100vh; display: flex; flex-direction:
 .section-desc { font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; }
 
 /* Hero */
-.hero-section { text-align: center; overflow: hidden; padding-top: 150px; position: relative; }
+.hero-section { text-align: center; overflow: hidden; padding-top: 150px; }
 .hero-content { position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; width: 100%; }
-
-/* Blueprint Aesthetic */
-.blueprint-grid {
-    position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 1; pointer-events: none; opacity: 0;
-    background-size: 40px 40px;
-    background-image: 
-        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    -webkit-mask-image: radial-gradient(circle at 50% 50%, black 20%, transparent 80%);
-    mask-image: radial-gradient(circle at 50% 50%, black 20%, transparent 80%);
-}
-.blueprint-metrics {
-    position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 2; pointer-events: none; opacity: 0;
-}
-.blueprint-metrics .metric {
-    position: absolute; font-family: 'Inter', monospace; font-size: 10px; color: rgba(255,255,255,0.3); letter-spacing: 1px;
-}
-.metric.top-left { top: 120px; left: 5%; }
-.metric.bottom-right { bottom: 10%; right: 5%; }
-.metric.crosshair-tr { top: 120px; right: 5%; font-size: 14px; }
-.metric.crosshair-bl { bottom: 10%; left: 5%; font-size: 14px; }
 
 .stacked-hero-title {
     display: flex; flex-direction: column; align-items: center; justify-content: center;

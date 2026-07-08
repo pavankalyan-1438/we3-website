@@ -249,21 +249,10 @@ gsap.to('.glow-2', {
 // --- GSAP Scroll Animations ---
 // --- Hero Typography Animation ---
 const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
-heroTl.to('.blueprint-grid', { opacity: 1, duration: 2, ease: "none" }, 0)
-      .to('.blueprint-metrics', { opacity: 1, duration: 1.5, delay: 0.5 }, 0)
-      .from('#word-build-container', { y: 60, opacity: 0, duration: 1, delay: 0.2 }, 0)
+heroTl.from('#word-build-container', { y: 60, opacity: 0, duration: 1, delay: 0.2 })
       .to('.outline-text', { strokeDashoffset: 0, duration: 1.5, ease: "power2.inOut" }, "-=0.6")
       .from('#word-deliver-container', { y: 60, opacity: 0, duration: 1 }, "-=0.8")
       .to('.hero-ctas', { y: 0, opacity: 1, duration: 0.8 }, "-=0.8");
-
-gsap.utils.toArray('.wireframe-target').forEach(card => {
-    ScrollTrigger.create({
-        trigger: card,
-        start: "top 75%",
-        onEnter: () => card.classList.remove('wireframe-mode'),
-        onLeaveBack: () => card.classList.add('wireframe-mode')
-    });
-});
 
 gsap.utils.toArray('.grid-3, .grid-2').forEach(grid => {
     gsap.from(grid.children, {
@@ -272,11 +261,8 @@ gsap.utils.toArray('.grid-3, .grid-2').forEach(grid => {
     });
 });
 
-gsap.utils.toArray('.case-study-card, .contact-card').forEach(card => {
-    gsap.from(card, { 
-        scrollTrigger: { trigger: card, start: "top 85%" }, 
-        y: 60, scale: 0.95, opacity: 0, duration: 1, ease: "power3.out" 
-    });
+gsap.utils.toArray('.case-study-card').forEach(card => {
+    gsap.from(card, { scrollTrigger: { trigger: card, start: "top 85%" }, y: 50, opacity: 0, duration: 0.8, ease: "power2.out" });
     
     const img = card.querySelector('.case-hero');
     if (img) {
