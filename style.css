@@ -130,7 +130,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .nav-logo img {
-    height: 22px; width: auto; object-fit: contain;
+    height: 28px; width: auto; object-fit: contain;
     filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
     transition: filter 0.3s ease;
 }
