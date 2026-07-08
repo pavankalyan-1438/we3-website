@@ -247,15 +247,12 @@ gsap.to('.glow-2', {
 });
 
 // --- GSAP Scroll Animations ---
-gsap.utils.toArray('.reveal-text').forEach(text => {
-    gsap.from(text, { scrollTrigger: { trigger: text, start: "top 90%", toggleActions: "play none none reverse" }, y: 40, opacity: 0, duration: 1, ease: "power3.out" });
-});
-gsap.utils.toArray('.reveal-text-delay').forEach(text => {
-    gsap.from(text, { scrollTrigger: { trigger: text, start: "top 90%", toggleActions: "play none none reverse" }, y: 30, opacity: 0, duration: 1, delay: 0.25, ease: "power3.out" });
-});
-gsap.utils.toArray('.reveal-text-delay-2').forEach(text => {
-    gsap.from(text, { scrollTrigger: { trigger: text, start: "top 90%", toggleActions: "play none none reverse" }, y: 30, opacity: 0, duration: 1, delay: 0.3, ease: "power3.out" });
-});
+// --- Hero Typography Animation ---
+const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
+heroTl.from('#word-build', { y: 60, opacity: 0, duration: 1, delay: 0.2 })
+      .from('#word-innovate', { y: 60, opacity: 0, duration: 1 }, "-=0.6")
+      .to('.outline-text', { strokeDashoffset: 0, duration: 1.5, ease: "power2.inOut" }, "-=0.4")
+      .to('.hero-ctas', { y: 0, opacity: 1, duration: 0.8 }, "-=0.8");
 
 gsap.utils.toArray('.grid-3, .grid-2').forEach(grid => {
     gsap.from(grid.children, {
