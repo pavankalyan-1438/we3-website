@@ -250,8 +250,8 @@ gsap.to('.glow-2', {
 // --- Hero Typography Animation ---
 const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
 heroTl.from('#word-build', { y: 60, opacity: 0, duration: 1, delay: 0.2 })
-      .from('#word-innovate', { y: 60, opacity: 0, duration: 1 }, "-=0.6")
-      .to('.outline-text', { strokeDashoffset: 0, duration: 1.5, ease: "power2.inOut" }, "-=0.4")
+      .to('.outline-text', { strokeDashoffset: 0, duration: 1.5, ease: "power2.inOut" }, "-=0.6")
+      .from('#word-deliver', { y: 60, opacity: 0, duration: 1 }, "-=0.8")
       .to('.hero-ctas', { y: 0, opacity: 1, duration: 0.8 }, "-=0.8");
 
 gsap.utils.toArray('.grid-3, .grid-2').forEach(grid => {
