@@ -122,10 +122,12 @@ if (liquidNav) {
     liquidNav.addEventListener('mouseenter', () => {
         isCursorInNav = true;
         if (cursorHalo) gsap.to(cursorHalo, { opacity: 1, duration: 0.3, ease: "power2.out" });
+        if (cursorDot) gsap.to(cursorDot, { opacity: 0, scale: 0, duration: 0.2, ease: "power2.out" });
     });
     liquidNav.addEventListener('mouseleave', () => {
         isCursorInNav = false;
         if (cursorHalo) gsap.to(cursorHalo, { opacity: 0, duration: 0.3, ease: "power2.out" });
+        if (cursorDot) gsap.to(cursorDot, { opacity: 1, scale: 1, duration: 0.2, ease: "power2.out" });
     });
 }
 
