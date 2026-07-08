@@ -269,7 +269,8 @@ section { padding: 160px 24px; min-height: 100vh; display: flex; flex-direction:
 .footer { border-top: 1px solid var(--glass-border); padding: 80px 24px 40px; background: var(--surface-color); }
 .footer-container { max-width: var(--max-width); margin: 0 auto; }
 .footer-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 48px; margin-bottom: 64px; }
-.footer-brand h2 { font-size: 2.5rem; margin-bottom: 8px; color: var(--text-primary); }
+.footer-brand { display: flex; flex-direction: column; align-items: flex-start; }
+.footer-logo { height: 48px; width: auto; object-fit: contain; margin-bottom: 24px; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2)); }
 .footer-brand p { color: var(--text-secondary); }
 .footer-links-grid { display: flex; gap: 64px; flex-wrap: wrap;}
 .link-col h4 { font-size: 1.1rem; margin-bottom: 16px; color: var(--text-primary); }
