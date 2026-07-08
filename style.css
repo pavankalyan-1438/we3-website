@@ -220,7 +220,7 @@ section { padding: 160px 24px; min-height: 100vh; display: flex; flex-direction:
 }
 .outline-word-container {
     width: 100%;
-    height: clamp(60px, 12vw, 150px);
+    height: calc(clamp(60px, 12vw, 150px) * 0.95);
     display: flex; justify-content: center; align-items: center;
     position: relative;
     overflow: visible;
