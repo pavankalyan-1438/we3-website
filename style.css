@@ -98,56 +98,36 @@ a { color: inherit; text-decoration: none; }
 .nav-item.active { color: var(--nav-active-text); }
 
 /* VisionOS Nav Engine */
-.liquid-nav-wrapper {
-    position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 100;
+.liquid-nav {
+    position: fixed; top: 30px; left: 50%; transform: translateX(-50%); z-index: 100;
     display: flex; align-items: center; justify-content: center;
-    gap: 24px;
-    width: max-content;
-    padding: 20px;
+    border-radius: 40px; padding: 8px; width: max-content;
 }
-
 .nav-glass-bg {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     background: var(--glass-bg); backdrop-filter: blur(var(--glass-blur)) saturate(180%);
-    z-index: 1; pointer-events: none;
-    mask: url(#gooey-mask);
-    -webkit-mask: url(#gooey-mask);
-    filter: drop-shadow(0 8px 32px rgba(0,0,0,0.08)) drop-shadow(0 0 1px rgba(255,255,255,0.3));
+    border: 1px solid var(--glass-border); border-radius: 40px; z-index: 1; pointer-events: none;
+    box-shadow: 0 8px 32px 0 rgba(0,0,0,0.08), inset 0 1px 0 0 rgba(255,255,255,1);
 }
-
-.nav-item-container {
-    position: relative;
-    z-index: 3;
-    display: flex; align-items: center; justify-content: center;
-    padding: 8px;
-    will-change: transform;
-}
-
 .nav-active-indicator {
-    position: absolute; top: 8px; left: 8px; 
+    position: absolute; top: 0; left: 0; 
     background: var(--nav-indicator); border-radius: 30px;
     transform-origin: center;
     box-shadow: 0 4px 15px rgba(0, 85, 164, 0.4);
     z-index: 2;
 }
-
 .nav-links {
     position: relative; z-index: 3; display: flex; gap: 4px; align-items: center;
 }
 
 .nav-logo {
     display: flex; align-items: center; justify-content: center;
+    margin-right: 16px; /* 16px margin + 4px gap = 20px space */
+    padding-left: 8px; /* balanced padding */
     cursor: none;
     transition: filter 0.3s ease, transform 0.3s ease;
     will-change: transform, filter;
-    padding-left: 8px; padding-right: 8px;
 }
-
-.nav-cta {
-    padding: 10px 20px; border-radius: 30px; font-weight: 500; font-size: 0.9rem;
-    position: relative; transition: color 0.3s ease; cursor: none;
-}
-.nav-cta:hover { color: var(--accent-color); }
 
 .nav-logo img {
     height: 22px; width: auto; object-fit: contain;
