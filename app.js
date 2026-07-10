@@ -52,14 +52,16 @@ gsap.ticker.add(() => {
         cursorHalo.style.left = `${dotX}px`;
         cursorHalo.style.top = `${dotY}px`;
     }
-    
     gsap.set(cursorDot, { 
-        left: dotX,
-        top: dotY,
+        x: dotX,
+        y: dotY,
         scaleX: scaleX, 
         scaleY: scaleY, 
         rotation: rotation
     });
+    
+    gsap.set(cursorGlass, { x: dotX, y: dotY });
+    if(cursorHalo) gsap.set(cursorHalo, { x: dotX, y: dotY });
 });
 
 magneticElements.forEach(el => {
@@ -247,12 +249,15 @@ gsap.to('.glow-2', {
 });
 
 // --- GSAP Scroll Animations ---
-// --- Hero Typography Animation ---
-const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
-heroTl.from('#word-build-container', { y: 60, opacity: 0, duration: 1, delay: 0.2 })
-      .to('.outline-text', { strokeDashoffset: 0, duration: 1.5, ease: "power2.inOut" }, "-=0.6")
-      .from('#word-deliver-container', { y: 60, opacity: 0, duration: 1 }, "-=0.8")
-      .to('.hero-ctas', { y: 0, opacity: 1, duration: 0.8 }, "-=0.8");
+gsap.utils.toArray('.reveal-text').forEach(text => {
+    gsap.from(text, { scrollTrigger: { trigger: text, start: "top 90%", toggleActions: "play none none reverse" }, y: 40, opacity: 0, duration: 1, ease: "power3.out" });
+});
+gsap.utils.toArray('.reveal-text-delay').forEach(text => {
+    gsap.from(text, { scrollTrigger: { trigger: text, start: "top 90%", toggleActions: "play none none reverse" }, y: 30, opacity: 0, duration: 1, delay: 0.25, ease: "power3.out" });
+});
+gsap.utils.toArray('.reveal-text-delay-2').forEach(text => {
+    gsap.from(text, { scrollTrigger: { trigger: text, start: "top 90%", toggleActions: "play none none reverse" }, y: 30, opacity: 0, duration: 1, delay: 0.3, ease: "power3.out" });
+});
 
 gsap.utils.toArray('.grid-3, .grid-2').forEach(grid => {
     gsap.from(grid.children, {

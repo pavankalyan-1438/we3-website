@@ -1,0 +1,392 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WE3 | Premium Digital Experiences</title>
+    <meta name="description" content="WE3 engineers premium digital products.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+
+    <div id="cursor-dot"></div>
+    <div id="cursor-halo"></div>
+    <div id="cursor-glass"></div>
+
+    <div class="ambient-background">
+    </div>
+
+    <!-- Navigation -->
+    <nav class="liquid-nav-wrapper">
+        <!-- SVG Mask Definitions -->
+        <svg class="nav-svg-defs" width="0" height="0" style="position: absolute; pointer-events: none;">
+            <defs>
+                <filter id="goo">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
+                    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -8" result="goo" />
+                    <feBlend in="SourceGraphic" in2="goo" />
+                </filter>
+                <mask id="gooey-mask">
+                    <g filter="url(#goo)">
+                        <rect class="mask-blob logo-blob" fill="white" rx="20" />
+                        <rect class="mask-blob center-blob" fill="white" rx="20" />
+                        <rect class="mask-blob cta-blob" fill="white" rx="20" />
+                    </g>
+                </mask>
+            </defs>
+        </svg>
+
+        <div class="nav-glass-bg"></div>
+
+        <div class="nav-item-container logo-container">
+            <a href="#hero" class="nav-logo btn-magnetic">
+                <img src="we3-logo.png" alt="WE3 Logo">
+            </a>
+        </div>
+        
+        <div class="nav-item-container center-container">
+            <div class="nav-active-indicator"></div>
+            <div class="nav-links" id="nav-container">
+                <a href="#hero" class="nav-item active btn-magnetic" data-target="hero">Home</a>
+                <a href="#about" class="nav-item btn-magnetic" data-target="about">About</a>
+                <a href="#projects" class="nav-item btn-magnetic" data-target="projects">Projects</a>
+                <a href="#services" class="nav-item btn-magnetic" data-target="services">Services</a>
+            </div>
+        </div>
+
+        <div class="nav-item-container cta-container">
+            <a href="#contact" class="nav-cta btn-magnetic" data-target="contact">It's A Start</a>
+        </div>
+    </nav>
+
+    <main id="smooth-wrapper">
+        <div id="smooth-content">
+            
+            <!-- Hero -->
+            <section id="hero" class="hero-section">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        <span class="reveal-text block-reveal highlight-text">WE3.</span>
+                    </h1>
+                    <p class="hero-subtitle reveal-text-delay">Build. Innovate. Deliver.</p>
+                    <div class="hero-ctas reveal-text-delay-2">
+                        <a href="#contact" class="btn-glass primary btn-magnetic">Start Your Project</a>
+                        <a href="#projects" class="btn-glass secondary btn-magnetic">View Our Work</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About & Process -->
+            <section id="about" class="about-section">
+                <div class="section-container text-center">
+                    <h2 class="section-title">About WE3</h2>
+                    <p class="section-desc mx-auto">We are a premium digital studio composed of former senior engineers and designers from the world's most innovative tech companies.</p>
+                    <div class="grid-2 mt-48 text-left">
+                        <div class="glass-card tilt-card">
+                            <h3 class="accent-title">Our Mission</h3>
+                            <p>To bridge the gap between stunning aesthetic design and rigorous technical performance. We believe software should feel physical, fast, and effortless.</p>
+                        </div>
+                        <div class="glass-card tilt-card">
+                            <h3 class="accent-title">Our Values</h3>
+                            <p>Quality over quantity. We take on select, visionary projects to ensure every product we ship is a timeless masterpiece.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-container" style="margin-top: 120px;">
+                    <h2 class="section-title text-center">How We Build</h2>
+                    <div class="timeline-container mt-48">
+                        <div class="timeline-line">
+                            <div class="timeline-progress"></div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content glass-card tilt-card">
+                                <h3>1. Discover</h3>
+                                <p>Understanding your vision, business goals, and technical requirements.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content glass-card tilt-card">
+                                <h3>2. Research</h3>
+                                <p>Market analysis, user interviews, and defining the architecture.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content glass-card tilt-card">
+                                <h3>3. Design</h3>
+                                <p>Crafting wireframes, UI design, and premium motion interactions.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content glass-card tilt-card">
+                                <h3>4. Develop</h3>
+                                <p>Writing clean, accessible, and high-performance code.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content glass-card tilt-card">
+                                <h3>5. Launch</h3>
+                                <p>Rigorous QA, SEO optimization, and a flawless deployment.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content glass-card tilt-card">
+                                <h3>6. Optimize</h3>
+                                <p>Continuous performance tuning and analytical iteration.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects (Case Studies & Testimonials) -->
+            <section id="projects" class="work-section">
+                <div class="section-container">
+                    <h2 class="section-title">Selected Case Studies</h2>
+                    <div class="case-studies-list mt-48">
+                        <div class="case-study-card glass-card">
+                            <div class="case-hero placeholder-1"></div>
+                            <div class="case-content">
+                                <h3 class="case-title">Nexis Platform</h3>
+                                <div class="case-tags">
+                                    <span class="tag">Next.js</span>
+                                    <span class="tag">Stripe</span>
+                                    <span class="tag">Tailwind</span>
+                                </div>
+                                <div class="case-details">
+                                    <div class="detail-block">
+                                        <h4>Challenge</h4>
+                                        <p>Modernizing a legacy financial dashboard with high data density.</p>
+                                    </div>
+                                    <div class="detail-block">
+                                        <h4>Solution</h4>
+                                        <p>A full rewrite using React Server Components and a premium dark-mode first design system.</p>
+                                    </div>
+                                    <div class="detail-block">
+                                        <h4>Results</h4>
+                                        <p>+45% user retention, 99 Lighthouse score, 2x faster load times.</p>
+                                    </div>
+                                </div>
+                                <div class="case-actions">
+                                    <a href="#" class="btn-glass primary btn-magnetic">Live Demo</a>
+                                    <a href="#" class="btn-glass secondary btn-magnetic">GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="case-study-card glass-card">
+                            <div class="case-hero placeholder-2"></div>
+                            <div class="case-content">
+                                <h3 class="case-title">Aura Dynamics</h3>
+                                <div class="case-tags">
+                                    <span class="tag">WebGL</span>
+                                    <span class="tag">Three.js</span>
+                                    <span class="tag">Framer Motion</span>
+                                </div>
+                                <div class="case-details">
+                                    <div class="detail-block">
+                                        <h4>Challenge</h4>
+                                        <p>Creating an immersive brand identity experience for an AI lab.</p>
+                                    </div>
+                                    <div class="detail-block">
+                                        <h4>Solution</h4>
+                                        <p>Custom 3D shaders, fluid typography, and dynamic ambient lighting.</p>
+                                    </div>
+                                    <div class="detail-block">
+                                        <h4>Results</h4>
+                                        <p>Awwwards Site of the Day, 200k+ organic visitors.</p>
+                                    </div>
+                                </div>
+                                <div class="case-actions">
+                                    <a href="#" class="btn-glass primary btn-magnetic">Live Demo</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonials -->
+                <div class="section-container text-center" style="margin-top: 120px;">
+                    <h2 class="section-title">What They Say</h2>
+                </div>
+                <div class="marquee-container mt-48">
+                    <div class="marquee-track">
+                        <!-- Group 1 -->
+                        <div class="testimonial-card glass-card tilt-card">
+                            <p class="quote">"This is one of the smoothest, most premium agency websites I've ever seen."</p>
+                            <div class="author-info">
+                                <div class="author-avatar liquid-glass">JD</div>
+                                <div>
+                                    <h4>John Doe</h4>
+                                    <p>CEO, TechCorp</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testimonial-card glass-card tilt-card">
+                            <p class="quote">"WE3 engineered an experience our users actually remember. Flawless execution."</p>
+                            <div class="author-info">
+                                <div class="author-avatar liquid-glass">SA</div>
+                                <div>
+                                    <h4>Sarah Adams</h4>
+                                    <p>Founder, Lumina</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testimonial-card glass-card tilt-card">
+                            <p class="quote">"The attention to detail and performance optimization is simply world-class."</p>
+                            <div class="author-info">
+                                <div class="author-avatar liquid-glass">MR</div>
+                                <div>
+                                    <h4>Michael Ross</h4>
+                                    <p>VP Product, StartupX</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Group 2 (Duplicate for smooth infinite scroll) -->
+                        <div class="testimonial-card glass-card tilt-card">
+                            <p class="quote">"This is one of the smoothest, most premium agency websites I've ever seen."</p>
+                            <div class="author-info">
+                                <div class="author-avatar liquid-glass">JD</div>
+                                <div>
+                                    <h4>John Doe</h4>
+                                    <p>CEO, TechCorp</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testimonial-card glass-card tilt-card">
+                            <p class="quote">"WE3 engineered an experience our users actually remember. Flawless execution."</p>
+                            <div class="author-info">
+                                <div class="author-avatar liquid-glass">SA</div>
+                                <div>
+                                    <h4>Sarah Adams</h4>
+                                    <p>Founder, Lumina</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testimonial-card glass-card tilt-card">
+                            <p class="quote">"The attention to detail and performance optimization is simply world-class."</p>
+                            <div class="author-info">
+                                <div class="author-avatar liquid-glass">MR</div>
+                                <div>
+                                    <h4>Michael Ross</h4>
+                                    <p>VP Product, StartupX</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Services -->
+            <section id="services" class="services-section">
+                <div class="section-container">
+                    <h2 class="section-title">Our Expertise</h2>
+                    <div class="grid-2 mt-48">
+                        <div class="glass-card tilt-card service-card">
+                            <div class="card-glow"></div>
+                            <div class="service-icon liquid-glass">Ô£¿</div>
+                            <h3>AI & Digital Products</h3>
+                            <p>Intelligent, data-driven applications built with state-of-the-art AI integration.</p>
+                        </div>
+                        <div class="glass-card tilt-card service-card">
+                            <div class="card-glow"></div>
+                            <div class="service-icon liquid-glass">­ƒô▒</div>
+                            <h3>Premium Web Experiences</h3>
+                            <p>Awwwards-winning websites with WebGL, smooth scrolling, and liquid interfaces.</p>
+                        </div>
+                        <div class="glass-card tilt-card service-card">
+                            <div class="card-glow"></div>
+                            <div class="service-icon liquid-glass">­ƒÄ¿</div>
+                            <h3>UX/UI Craftsmanship</h3>
+                            <p>World-class interface design focused on micro-interactions and conversion.</p>
+                        </div>
+                        <div class="glass-card tilt-card service-card">
+                            <div class="card-glow"></div>
+                            <div class="service-icon liquid-glass">ÔÜí</div>
+                            <h3>Frontend Engineering</h3>
+                            <p>High-performance React/Next.js architectures deployed on edge networks.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+
+            <!-- Contact -->
+            <section id="contact" class="contact-section">
+                <div class="section-container">
+                    <div class="contact-card glass-card tilt-card">
+                        <div class="card-glow"></div>
+                        <h2 class="section-title">Ready to Innovate?</h2>
+                        <p style="margin-bottom: 32px; color: var(--text-secondary);">Let's engineer your next digital experience.</p>
+                        <form class="contact-form">
+                            <div class="form-row">
+                                <input type="text" placeholder="Name" class="glass-input btn-magnetic">
+                                <input type="email" placeholder="Email" class="glass-input btn-magnetic">
+                            </div>
+                            <div class="form-row">
+                                <input type="text" placeholder="Company" class="glass-input btn-magnetic">
+                                <select class="glass-input btn-magnetic">
+                                    <option value="" disabled selected>Project Budget</option>
+                                    <option value="10-25k">$10k - $25k</option>
+                                    <option value="25-50k">$25k - $50k</option>
+                                    <option value="50k+">$50k+</option>
+                                </select>
+                            </div>
+                            <textarea placeholder="Project Description" rows="4" class="glass-input btn-magnetic"></textarea>
+                            <button type="button" class="btn-glass primary btn-magnetic" style="margin-top: 24px; padding: 16px 32px; width: 100%;">Let's Build Something Great</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="footer-container">
+                    <div class="footer-top">
+                        <div class="footer-brand">
+                            <h2>WE3.</h2>
+                            <p>Premium Digital Studio</p>
+                        </div>
+                        <div class="footer-links-grid">
+                            <div class="link-col">
+                                <h4>Navigation</h4>
+                                <a href="#hero" class="btn-magnetic">Home</a>
+                                <a href="#about" class="btn-magnetic">About</a>
+                                <a href="#projects" class="btn-magnetic">Projects</a>
+                                <a href="#services" class="btn-magnetic">Services</a>
+                                <a href="#contact" class="btn-magnetic">It's A Start</a>
+                            </div>
+                            <div class="link-col">
+                                <h4>Socials</h4>
+                                <a href="#" class="btn-magnetic">Twitter / X</a>
+                                <a href="#" class="btn-magnetic">LinkedIn</a>
+                                <a href="#" class="btn-magnetic">GitHub</a>
+                                <a href="#" class="btn-magnetic">Dribbble</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-bottom">
+                        <p>&copy; 2026 WE3 Agency. All rights reserved.</p>
+                        <div class="footer-legal">
+                            <a href="#" class="btn-magnetic">Privacy Policy</a>
+                            <a href="#" class="btn-magnetic">Terms of Service</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="./app.js"></script>
+</body>
+</html>
