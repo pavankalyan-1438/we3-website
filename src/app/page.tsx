@@ -1,6 +1,20 @@
+'use client';
+
 import { PageAnimations } from "@/components/PageAnimations";
+import { useRef, useEffect } from "react";
+import { useInView, motion } from "framer-motion";
+import { useNav } from "@/components/navigation/NavContext";
+import { NavCapsule } from "@/components/navigation/NavCapsule";
 
 export default function Home() {
+  const { isProjectsInView, setIsProjectsInView } = useNav();
+  const projectsRef = useRef<HTMLElement>(null);
+  const inView = useInView(projectsRef, { margin: "-200px 0px" });
+
+  useEffect(() => {
+    setIsProjectsInView(inView);
+  }, [inView, setIsProjectsInView]);
+
   return (
     <>
       <PageAnimations />
@@ -92,10 +106,21 @@ export default function Home() {
         </section>
 
         {/* Projects */}
-        <section id="projects" className="flex min-h-screen flex-col justify-center px-6 py-40">
+        <section ref={projectsRef} id="projects" className="flex min-h-screen flex-col justify-center px-6 py-40">
           <div className="section-container mx-auto w-full max-w-[var(--max-width)]">
-            <h2 className="section-title">Selected Case Studies</h2>
-            <div className="mt-12 flex flex-col gap-16">
+            <div className="flex items-center gap-6 mb-12">
+              <h2 className="section-title !mb-0">Selected Case Studies</h2>
+              <div className="relative w-[100px] h-[40px]">
+                {isProjectsInView && (
+                  <motion.div layoutId="projects-capsule" className="absolute inset-0 z-50">
+                    <NavCapsule className="px-4 py-2 bg-black/80">
+                      <span className="text-white font-medium">Projects</span>
+                    </NavCapsule>
+                  </motion.div>
+                )}
+              </div>
+            </div>
+            <div className="flex flex-col gap-16">
               <article className="case-study-card glass-card overflow-hidden p-0">
                 <div className="case-hero h-[400px] w-full bg-gradient-to-br from-gray-900 to-gray-600 bg-cover bg-center" />
                 <div className="p-12">
