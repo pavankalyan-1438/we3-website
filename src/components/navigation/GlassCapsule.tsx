@@ -2,8 +2,14 @@ import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 interface GlassCapsuleProps {
-  children: ReactNode;
-  className?: string;
+  children: React.ReactNode;
+
+  mouseX: number;
+  mouseY: number;
+  velocityX: number;
+  velocityY: number;
+
+  padding?: string;
 }
 
 export function GlassCapsule({ children, className }: GlassCapsuleProps) {
