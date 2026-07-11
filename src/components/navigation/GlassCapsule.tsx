@@ -4,11 +4,6 @@ import { cn } from "@/lib/utils";
 interface GlassCapsuleProps {
   children: React.ReactNode;
   className?: string;
-  padding?: string;
-  mouseX?: number;
-  mouseY?: number;
-  velocityX?: number;
-  velocityY?: number;
 }
 
 export function GlassCapsule({ children, className }: GlassCapsuleProps) {
