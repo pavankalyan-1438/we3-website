@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import { ScrollController } from "@/components/navigation/ScrollController";
-import { LiquidNav } from "@/components/navigation/LiquidNav";
-import { NavProvider } from "@/components/navigation/NavContext";
+import { Navbar } from "@/components/navigation/Navbar";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -27,12 +26,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
-      <body className="font-sans antialiased">
+      <body className="font-sans antialiased bg-black">
         <ScrollController>
-          <NavProvider>
-            <LiquidNav />
-            {children}
-          </NavProvider>
+          <Navbar />
+          {children}
         </ScrollController>
       </body>
     </html>
