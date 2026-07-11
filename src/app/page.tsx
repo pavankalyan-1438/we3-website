@@ -310,7 +310,7 @@ export default function Home() {
             <div className="footer-container">
               <div className="footer-top">
                 <div className="footer-brand">
-                  <img src="we3-logo.png" alt="WE3 Logo" className="footer-logo" />
+                  <img src="/we3-logo.png" alt="WE3 Logo" className="footer-logo" />
                   <p>Build. Innovate. Deliver.</p>
                 </div>
                 <div className="footer-links-grid">

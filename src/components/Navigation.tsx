@@ -10,7 +10,7 @@ export function Navigation() {
 
       <div className="nav-links" id="nav-container">
         <a href="#hero" className="nav-logo btn-magnetic">
-          <img src="we3-logo.png" alt="WE3 Logo" />
+          <img src="/we3-logo.png" alt="WE3 Logo" />
         </a>
         <a href="#hero" className="nav-item active btn-magnetic" data-target="hero">
           Home
