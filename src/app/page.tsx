@@ -123,8 +123,7 @@ export default function Home() {
             <div className="projects-scroll-wrapper mt-48">
               <div className="projects-horizontal-track">
                 <div className="case-studies-list">
-                <div className="case-study-card glass-card">
-                  <div className="case-hero placeholder-1"></div>
+                <div className="case-study-card glass-card group">
                   <div className="case-content">
                     <h3 className="case-title">Nexis Platform</h3>
                     <div className="case-tags">
@@ -143,14 +142,17 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="case-actions">
-                      <a href="#" className="btn-glass primary btn-magnetic">View Case Study</a>
+                      <a href="#" className="btn-glass primary btn-magnetic premium-hover">View Case Study</a>
                       <a href="#" className="btn-glass btn-magnetic">Live Site</a>
                     </div>
                   </div>
+                  <div className="case-hero-container">
+                    <div className="case-hero placeholder-1"></div>
+                    <div className="glass-reflection"></div>
+                  </div>
                 </div>
 
-                <div className="case-study-card glass-card">
-                  <div className="case-hero placeholder-2"></div>
+                <div className="case-study-card glass-card group">
                   <div className="case-content">
                     <h3 className="case-title">Aura E-Commerce</h3>
                     <div className="case-tags">
@@ -169,8 +171,12 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="case-actions">
-                      <a href="#" className="btn-glass primary btn-magnetic">View Case Study</a>
+                      <a href="#" className="btn-glass primary btn-magnetic premium-hover">View Case Study</a>
                     </div>
+                  </div>
+                  <div className="case-hero-container">
+                    <div className="case-hero placeholder-2"></div>
+                    <div className="glass-reflection"></div>
                   </div>
                 </div>
                 </div>

@@ -253,8 +253,22 @@ export function PageAnimations() {
             }
           });
           
-          tl.to(card as HTMLElement, { scale: 1, opacity: 1, duration: 0.5, ease: "power1.inOut" })
-            .to(card as HTMLElement, { scale: 0.95, opacity: 0.5, duration: 0.5, ease: "power1.inOut" });
+          tl.fromTo(card as HTMLElement, 
+              { scale: 0.9, opacity: 0.75 }, 
+              { scale: 1, opacity: 1, duration: 0.5, ease: "power1.inOut" }
+            )
+            .to(card as HTMLElement, { scale: 0.9, opacity: 0.75, duration: 0.5, ease: "power1.inOut" });
+
+          // Mouse tracking for glass reflection
+          const handleMouseMove = (e: Event) => {
+            const mouseEvent = e as MouseEvent;
+            const rect = (card as HTMLElement).getBoundingClientRect();
+            const x = mouseEvent.clientX - rect.left;
+            const y = mouseEvent.clientY - rect.top;
+            (card as HTMLElement).style.setProperty('--x', `${x}px`);
+            (card as HTMLElement).style.setProperty('--y', `${y}px`);
+          };
+          (card as HTMLElement).addEventListener('mousemove', handleMouseMove);
         });
       }
     });
