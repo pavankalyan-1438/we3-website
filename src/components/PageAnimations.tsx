@@ -202,12 +202,71 @@ export function PageAnimations() {
       gsap.from((grid as HTMLElement).children, { scrollTrigger: { trigger: grid as HTMLElement, start: "top 85%" }, y: 50, opacity: 0, duration: 0.8, stagger: 0.15, ease: "power2.out" });
     });
 
-    gsap.utils.toArray('.case-study-card').forEach(card => {
-      gsap.from(card as HTMLElement, { scrollTrigger: { trigger: card as HTMLElement, start: "top 85%" }, y: 50, opacity: 0, duration: 0.8, ease: "power2.out" });
-      const img = (card as HTMLElement).querySelector('.case-hero');
-      if (img) {
-        gsap.to(img, { backgroundPosition: `50% 100%`, ease: "none", scrollTrigger: { trigger: card as HTMLElement, start: "top bottom", end: "bottom top", scrub: true }});
+    let mm = gsap.matchMedia();
+
+    mm.add("(min-width: 768px)", () => {
+      const wrapper = document.querySelector('.projects-scroll-wrapper');
+      const track = document.querySelector('.projects-horizontal-track');
+      const cards = gsap.utils.toArray('.case-study-card');
+      
+      if (wrapper && track && cards.length > 0) {
+        const getScrollAmount = () => -(track.scrollWidth - window.innerWidth);
+        
+        const tween = gsap.to(track, {
+          x: getScrollAmount,
+          ease: "none"
+        });
+
+        ScrollTrigger.create({
+          trigger: wrapper,
+          start: "top top",
+          end: () => `+=${track.scrollWidth - window.innerWidth}`,
+          pin: true,
+          animation: tween,
+          scrub: 1,
+          invalidateOnRefresh: true
+        });
+
+        cards.forEach((card) => {
+          const img = (card as HTMLElement).querySelector('.case-hero');
+          if (img) {
+            gsap.to(img, {
+              backgroundPosition: `50% 100%`,
+              ease: "none",
+              scrollTrigger: {
+                trigger: card as HTMLElement,
+                containerAnimation: tween,
+                start: "left right",
+                end: "right left",
+                scrub: true
+              }
+            });
+          }
+
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: card as HTMLElement,
+              containerAnimation: tween,
+              start: "left right",
+              end: "right left",
+              scrub: true,
+            }
+          });
+          
+          tl.to(card as HTMLElement, { scale: 1, opacity: 1, duration: 0.5, ease: "power1.inOut" })
+            .to(card as HTMLElement, { scale: 0.95, opacity: 0.5, duration: 0.5, ease: "power1.inOut" });
+        });
       }
+    });
+
+    mm.add("(max-width: 767px)", () => {
+      gsap.utils.toArray('.case-study-card').forEach(card => {
+        gsap.from(card as HTMLElement, { scrollTrigger: { trigger: card as HTMLElement, start: "top 85%" }, y: 50, opacity: 0, duration: 0.8, ease: "power2.out" });
+        const img = (card as HTMLElement).querySelector('.case-hero');
+        if (img) {
+          gsap.to(img, { backgroundPosition: `50% 100%`, ease: "none", scrollTrigger: { trigger: card as HTMLElement, start: "top bottom", end: "bottom top", scrub: true }});
+        }
+      });
     });
 
     if (document.querySelector(".timeline-container")) {

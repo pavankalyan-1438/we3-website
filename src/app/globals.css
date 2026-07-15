@@ -269,7 +269,36 @@ section { padding: 160px 24px; min-height: 100vh; display: flex; flex-direction:
 
 /* Case Studies */
 .case-studies-list { display: flex; flex-direction: column; gap: 64px; }
-.case-study-card { padding: 0; overflow: hidden; }
+.case-study-card { padding: 0; overflow: hidden; transform-origin: center; will-change: transform, opacity; }
+
+/* Desktop Horizontal Scroll Layout */
+@media (min-width: 768px) {
+  .projects-scroll-wrapper {
+    overflow: hidden;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  .projects-horizontal-track {
+    width: max-content;
+    display: flex;
+    align-items: center;
+  }
+  .case-studies-list {
+    flex-direction: row;
+    align-items: center;
+    gap: 100px;
+    padding: 0 calc(50vw - min(42.5vw, 600px));
+    margin-top: 0;
+  }
+  .case-study-card {
+    width: 85vw;
+    max-width: 1200px;
+    flex-shrink: 0;
+  }
+}
 .case-hero { width: 100%; height: 400px; background-size: cover; background-position: center; transition: transform 0.6s ease; }
 .placeholder-1 { background: linear-gradient(135deg, #111827, #374151); }
 .placeholder-2 { background: linear-gradient(135deg, #1e1b4b, #312e81); }

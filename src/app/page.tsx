@@ -117,9 +117,12 @@ export default function Home() {
 
           {/* Projects (Case Studies & Testimonials) */}
           <section id="projects" className="work-section">
-            <div className="section-container">
+            <div className="section-container projects-header-container">
               <h2 className="section-title">Selected Case Studies</h2>
-              <div className="case-studies-list mt-48">
+            </div>
+            <div className="projects-scroll-wrapper mt-48">
+              <div className="projects-horizontal-track">
+                <div className="case-studies-list">
                 <div className="case-study-card glass-card">
                   <div className="case-hero placeholder-1"></div>
                   <div className="case-content">
@@ -169,6 +172,7 @@ export default function Home() {
                       <a href="#" className="btn-glass primary btn-magnetic">View Case Study</a>
                     </div>
                   </div>
+                </div>
                 </div>
               </div>
             </div>
