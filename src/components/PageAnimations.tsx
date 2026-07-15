@@ -219,8 +219,8 @@ export function PageAnimations() {
 
         ScrollTrigger.create({
           trigger: wrapper,
-          start: "top top",
-          end: () => `+=${track.scrollWidth}`,
+          start: "center center",
+          end: () => `+=${track.scrollWidth - window.innerWidth}`,
           pin: true,
           pinSpacing: true,
           animation: tween,

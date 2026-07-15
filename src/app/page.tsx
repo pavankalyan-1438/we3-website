@@ -120,7 +120,7 @@ export default function Home() {
             <div className="section-container projects-header-container">
               <h2 className="section-title">Selected Case Studies</h2>
             </div>
-            <div className="projects-scroll-wrapper mt-48">
+            <div className="projects-scroll-wrapper mt-32">
               <div className="projects-horizontal-track">
                 <div className="case-studies-list">
                 <div className="case-study-card glass-card group">
@@ -183,7 +183,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="section-container" style={{ marginTop: "160px" }}>
+            <div className="section-container mt-32">
               <h2 className="section-title text-center">What Our Clients Say</h2>
               <div className="marquee-container mt-48">
                 <div className="marquee-track">

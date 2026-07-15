@@ -332,9 +332,6 @@ section { padding: 160px 24px; min-height: 100vh; display: flex; flex-direction:
   .projects-scroll-wrapper {
     overflow: hidden;
     width: 100%;
-    height: 100vh;
-    display: flex;
-    align-items: center;
     position: relative;
     background-color: var(--bg-color);
     z-index: 10;
