@@ -336,6 +336,8 @@ section { padding: 160px 24px; min-height: 100vh; display: flex; flex-direction:
     display: flex;
     align-items: center;
     position: relative;
+    background-color: var(--bg-color);
+    z-index: 10;
   }
   .projects-horizontal-track {
     width: max-content;
