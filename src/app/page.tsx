@@ -25,17 +25,17 @@ export default function Home() {
               <div className="stacked-hero-title">
                 <div className="hero-word-container" id="word-build-container">
                   <svg width="100%" className="hero-word-svg">
-                    <text x="50%" y="52%" textAnchor="middle" dominantBaseline="middle" className="solid-text">BUILD</text>
+                    <text x="50%" y="52%" textAnchor="middle" dominantBaseline="middle" className="solid-text">NO TIME</text>
                   </svg>
                 </div>
                 <div className="hero-word-container" id="word-innovate-container">
                   <svg width="100%" className="hero-word-svg">
-                    <text x="50%" y="52%" textAnchor="middle" dominantBaseline="middle" className="outline-text">INNOVATE</text>
+                    <text x="50%" y="52%" textAnchor="middle" dominantBaseline="middle" className="outline-text">GET IT</text>
                   </svg>
                 </div>
                 <div className="hero-word-container" id="word-deliver-container">
                   <svg width="100%" className="hero-word-svg">
-                    <text x="50%" y="52%" textAnchor="middle" dominantBaseline="middle" className="solid-text">DELIVER</text>
+                    <text x="50%" y="52%" textAnchor="middle" dominantBaseline="middle" className="solid-text">DONE</text>
                   </svg>
                 </div>
               </div>
@@ -49,7 +49,7 @@ export default function Home() {
           {/* About & Process */}
           <section id="about" className="about-section">
             <div className="section-container text-center">
-              <h2 className="section-title">About WE3</h2>
+              <h2 className="section-title">About NTG</h2>
               <p className="section-desc mx-auto">We are a premium digital studio composed of former senior engineers and designers from the world&apos;s most innovative tech companies.</p>
               <div className="grid-2 mt-48 text-left">
                 <div className="glass-card tilt-card">
@@ -199,7 +199,7 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="testimonial-card glass-card tilt-card">
-                    <p className="quote">&quot;WE3 engineered an experience our users actually remember. Flawless execution.&quot;</p>
+                    <p className="quote">&quot;NTG engineered an experience our users actually remember. Flawless execution.&quot;</p>
                     <div className="author-info">
                       <div className="author-avatar liquid-glass">SA</div>
                       <div>
@@ -230,7 +230,7 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="testimonial-card glass-card tilt-card">
-                    <p className="quote">&quot;WE3 engineered an experience our users actually remember. Flawless execution.&quot;</p>
+                    <p className="quote">&quot;NTG engineered an experience our users actually remember. Flawless execution.&quot;</p>
                     <div className="author-info">
                       <div className="author-avatar liquid-glass">SA</div>
                       <div>
@@ -320,8 +320,8 @@ export default function Home() {
             <div className="footer-container">
               <div className="footer-top">
                 <div className="footer-brand">
-                  <img src="/we3-logo.png" alt="WE3 Logo" className="footer-logo" />
-                  <p>Build. Innovate. Deliver.</p>
+                  <img src="/ntg-logo.svg" alt="NTG Logo" className="footer-logo" />
+                  <p>NO TIME GET IT DONE</p>
                 </div>
                 <div className="footer-links-grid">
                   <div className="link-col">
@@ -342,7 +342,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="footer-bottom">
-                <p>&copy; 2026 WE3 Agency. All rights reserved.</p>
+                <p>&copy; 2026 NTG. All rights reserved.</p>
                 <div className="footer-legal">
                   <a href="#" className="btn-magnetic">Privacy Policy</a>
                   <a href="#" className="btn-magnetic">Terms of Service</a>
