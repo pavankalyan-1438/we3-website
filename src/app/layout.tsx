@@ -15,6 +15,7 @@ const outfit = Outfit({
 export const metadata: Metadata = {
   title: "NTG | No Time Get It Done",
   description: "NTG — No Time Get It Done. Premium digital products and experiences.",
+  icons: { icon: "/ntg-logo.svg" },
 };
 
 export default function RootLayout({
