@@ -13,8 +13,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "WE3 | Premium Digital Experiences",
-  description: "WE3 engineers premium digital products.",
+  title: "NTG | No Time Get It Done",
+  description: "NTG — No Time Get It Done. Premium digital products and experiences.",
 };
 
 export default function RootLayout({
